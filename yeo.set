@@ -1,0 +1,17 @@
+# This is the setting file for the inkVerb yeoman "yeo"
+
+
+# Yeo
+YEOFORT=/var/local/yeo
+YEOPB=${YEOFORT}/phonebook
+
+# Verb
+SERFS=/var/local/verb/serfs
+CONFIGS=/var/local/verb/configs
+DONJON=/var/local/verb/donjon
+DROIDS=/var/local/verb/droids
+TOOLS=/var/local/verb/tools
+REPO=/var/local/verb/repo
+BOSS=/var/local/verb/boss
+DOCS=/var/local/verb/docs
+

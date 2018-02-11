@@ -1,0 +1,110 @@
+#!/bin/bash
+#inkVerbYeo! verb.ink
+
+# This is the "Yeoman" who manages a Verber by interacting with "Serfs", "Knights", the "Donjon", et cetera.
+## This uses "yeo" to execute commands relevant to a Verber, similarly to how "apt", "yum", and "pacman" manage packages.
+## yeo streamlines help queries, checks for required parameters, and provides a production-worthy layer of "fool-proofing".
+## yeo retrieves available options, tools, settings, notes, parameter requirements, et cetera from the Verber assets themselves using functions & tools like grep and occasionally a central index. This is partially why formatting Serfs is important.
+## This is NOT at all affiliated with http://yeoman.io/, which uses "yo".
+
+# Put the path to the setting file here
+YEOSET=/var/local/yeo/yeo.set
+
+# Include the setting file
+. ${YEOSET}
+
+
+# Validity check functions
+
+## Present (merely checks if something is present)
+isPresent() {
+
+}
+
+## Integer
+isInt() {
+
+}
+
+## IP4
+isIP4() {
+
+}
+
+## IP6
+isIP6() {
+
+}
+
+## Set (a set of multiple-choice options)
+{
+
+}
+
+## az
+{
+
+}
+
+## azAZ
+{
+
+}
+
+## az09
+{
+
+}
+
+## azAZ09
+{
+
+}
+
+## azAZ09&
+{
+
+}
+
+## FileDir (azAZ.)
+{
+
+}
+
+## URL
+{
+
+}
+
+## Domain
+{
+
+}
+
+## verbTLD (valid, accepted TLDs; not full, proper verbURI)
+{
+
+}
+
+
+# Serf Management
+
+## Get surnames
+getSurnames() {
+cat ${YEOPB}
+}
+
+## Get subnames
+getSubnames() {
+SURNAME=$1
+for SUBNAME in ${SERFS}/${SURNAME}*; do
+listSubName=$(echo ${SUBNAME} | sed "s/${SURNAME}//")
+echo ${listSubName}
+done
+}
+
+## Get hierarchy (the top-down priority rank of Serfs running Serfs)
+getHierarchy() {
+
+}
+
