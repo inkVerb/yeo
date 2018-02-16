@@ -1,0 +1,4 @@
+include the serf for settings, but don't run it
+retrieve the array of settings
+create keys for options
+create N/A fillers for all serf options

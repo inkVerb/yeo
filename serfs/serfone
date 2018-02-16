@@ -1,0 +1,31 @@
+#!/bin/sh
+#inkVerbSerf!
+
+# This is a sample serf
+## These are additional notes
+## These are more additional notes
+
+# How to use:
+## ./serfone [ setting 1 ] [ setting 2 ] [ setting 3 - optional ]
+
+# Eg:
+## ./serfone set1 set2
+## ./serfone set1 set2 opt3
+
+hierarchy=primary			# Choose: primary (works by itself, may use secondaries or tertiaries); secondary (can work by itself, but not normally, may use other secondaries or tertiaries); tertiary (cannot run by itself, must be run by a secondary or primary);oversight (uses primaries)
+vsetnames=( "Name" "Hex Color" )	# "Pretty" names for each setting, must be in order of settings
+voptnames=( "Height" )	# "Pretty" names for each optional setting, must be in order of options
+vsettypes=( azAZ HEX )		# Value types for settings in # Validity check functions, must be in order of settings
+vopttypes=( Float )		# Value types for options in # Validity check functions, must be in order of options
+voptflags=( t )			# "Flags" to be used to proceed optional settings, must be in order of options
+usedby=( serfalso serf worker )			# List other serfs that make use of this serf, no particular order
+useserfs=( anotherserf anotherserfwik )		# List other serfs used in this serf, please preserve order of appearance
+useconfigs=( sitenameip siteurilist )	# List config files of any kind used in this serf, please preserve order of appearance
+usagenotes="This serf is a test serfs. It is useful in developing yeo."
+					#
+					# Skip two lines after meta
+SETTING1=$1				# Set inline variables first
+SETTING2=$2
+
+echo "The rest goes here."		# This is where the rest of the working script begins
+					# Leave one blank line at the end for easier editing

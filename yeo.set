@@ -2,16 +2,18 @@
 
 
 # Yeo
-YEOFORT=/var/local/yeo
-YEOPB=${YEOFORT}/phonebook
+YEOFORT=./
+YEOPB=./phonebook
 
 # Verb
-SERFS=/var/local/verb/serfs
-CONFIGS=/var/local/verb/configs
-DONJON=/var/local/verb/donjon
-DROIDS=/var/local/verb/droids
-TOOLS=/var/local/verb/tools
-REPO=/var/local/verb/repo
-BOSS=/var/local/verb/boss
-DOCS=/var/local/verb/docs
+SERFS=./serfs
+CONFIGS=./configs
+DONJON=./donjon
+DROIDS=./droids
+TOOLS=./tools
+REPO=./repo
+BOSS=./boss
+DOCS=./docs
 
+# Settings
+VERBTLDS=( one ink email blue kiwi red pink guru uno rocks )
