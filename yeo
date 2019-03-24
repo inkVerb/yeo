@@ -8,10 +8,11 @@
 ## This is NOT at all affiliated with http://yeoman.io/, which uses "yo".
 
 # How to use:
-## yeo surname subname setting1 setting2 setting3 setting4 -o option1 option2 option3 
+## yeo surname subname setting1 setting2 setting3 setting4 -o option1 option2 option3
 
 # Put the path to the setting file here
-YEOSET=/var/local/yeo/yeo.set
+#YEOSET=/opt/yeo/yeo.set
+YEOSET=~/Dropbox/DocTools/Dev/vrk-verb-ink/yeo/yeo.set
 
 # Include the setting file
 . ${YEOSET}
@@ -22,21 +23,16 @@ YEOSET=/var/local/yeo/yeo.set
 ## Parse arguments
 SURNAME=${1}
 SUBNAME=${2}
-RUNSERF=${SURNAME}${SUBNAME}
+shift 2
 ALLARGS=($@)
-SERFSET=$(echo ${ALLARGS} | sed "s/ -.*//") #Get the required settings
-SERFOPT=$(echo ${ALLARGS} | sed "s/${SERFSET}//") #Get the options and their flags
-ALLSETOPT=(${SERFSET} ${SERFOPT})
-ALLSONAME=(${vsetnames[@]} ${voptnames[@]})
-### Create an array of the input Settings for easy counting and matching
-SERFSETARY=(${SERFSET})
 
-## Get Serf meta
-source ${SERFS}/${RUNSERF}
+
+## Get Serf Yeoman settings meta
+source ${SERFS}/${SURNAME}${SUBNAME}.ys
 
 # Validity check functions
 
-## Present (merely checks if a Setting is present in the command)
+## Present (merely checks if a necessary Setting is present in the command)
 isPresent() {
 local Present=$1
 local vvar=$2
@@ -46,6 +42,7 @@ isPresent=false; fi
 
 if [ $isPresent = false ]; then
 echo "$vvar must be present."
+usage
 exit 55; fi
 }
 
@@ -127,14 +124,14 @@ exit 55; fi
 }
 
 ## Float
-isInt() {
-local Int=$1
+isFloat() {
+local Float=$1
 local vvar=$2
-if [[ "$Int" =~ [-+]?[:digit:]+\.?[:digit:]*$ ]]; then
-isInt=true; else
-isInt=false; fi
+if [[ "$Float" =~ [-+]?[:digit:]+\.?[:digit:]*$ ]]; then
+isFloat=true; else
+isFloat=false; fi
 
-if [ $isInt = false ]; then
+if [ $isFloat = false ]; then
 echo "$vvar must be a valid integer or decimal."
 exit 55; fi
 }
@@ -309,11 +306,11 @@ done
 usageMessage()
 {
 echo "
-Help:  ${SURNAME} ${SUBNAME} --h or --help  (to see this information)
+Help: yeo ${SURNAME} ${SUBNAME} --h or --help  (to see this information)
 
 ${usagenotes}
 
-Usage: ${SURNAME} ${SUBNAME} ${vsetslugs[@]} [Optional settings, se below ]
+Usage: ${SURNAME} ${SUBNAME} ${vsetslugs[@]} [Optional settings, see below ]
 Options:"
 local k=0
 while [ $k != ${#voptflags[@]} ]; do
@@ -340,139 +337,34 @@ if [ echo ${vopttypes[$k]} | grep "Choice" ]; then
 fi
 }
 
-## Validate the Settings of the Serf
-getSetValidation() {
-
-### Check that all settings are present
-if [ ${#SERFSETARY[@]} = ${#vsetnames[@]} ]; then
-setCount=true; else
-setCount=false
-echo "Include all settings:"
-#### Put each element on its own line
-printf '%s\n' "${vsetnames[@]}"
-exit 55; fi
-
-### Validate each setting and option
-local k=0
-for SETINPUT in ${SERFSETARY[@]}; do
-#### Prepare any multiple choice Settings
-##### Two-stage empty set to avoid errors when not a Choice Type
- local showOptChoices=NULLCHOICES
- local NULLCHOICES=
- if [ "${vsettypes[$k]}" = "Choice" ]; then
-  showSetChoices="vsetMC_$k"
- fi
-#### Run the check
-is${vsettypes[$k]} $SETINPUT "${vsetnames[$k]}" "${!showSetChoices}"
-k=`expr ${k} + 1`
-done
-
-### Declare results
-${RUNSERF}SetVal=true
-return 0
+usageYeo() {
+echo "
+Help: yeo [ Surname ] [ Subname ] -h
+This will display related options.
+Help: yeo [ Surname ] -h
+This will display available subroutines.
+Available surnames:
+"
+cat ${yDir}/phonebook
 }
 
-## Validate the Options of the Serf
-getOptValidation() {
+usageSur() {
+echo "
 
-### Create an Options array and assign the Flags as keys to the Option Type values of the array
-#### Later we recall the value of $type_element as: ${!optsTypeFAK[$optFlagKey]}
-local k=0
-declare -A optsTypeFAK
-while [ $k != ${#voptflags[@]} ]; do
-optsTypeFAK[${voptflags[$k]}]=${vopttypes[$k]}
-k=`expr ${k} + 1`
-done
-
-### Create an Options array and assign the Flags as keys to the Option Slug values of the array
-#### Later we recall the value of $slug_element as: ${!optsSlugFAK[$optFlagKey]}
-local k=0
-declare -A optsSlugFAK
-while [ $k != ${#voptflags[@]} ]; do
-optsSlugFAK[${voptflags[$k]}]=${voptslugs[$k]}
-k=`expr ${k} + 1`
-done
-
-### Create an Options Name array and assign the Flags as keys to the Option Name values of the array
-#### Later we recall the value of $name_element as: ${!optsSlugFAK[$optFlagKey]}
-local k=0
-declare -A optsNameFAK
-while [ $k != ${#voptflags[@]} ]; do
-optsNameFAK[${voptflags[$k]}]="${voptnames[$k]}"
-k=`expr ${k} + 1`
-done
-
-### Declare the Option Input variables as NULLIN now so setting Options requires positive attendance
-for optFlagKey in ${voptflags[@]}; do
-#### We set the value of the Type as NULLIN, ie $Int=NULLIN, $Domain=NULLIN, thanks https://unix.stackexchange.com/questions/23111/what-is-the-eval-command-in-bash
-local eval ${optsSlugFAK[$optFlagKey]}=NULLIN
-done
-
-### Create a getops list
-local optGetopts=
-for optF in ${voptflags[@]}; do
-optGetopts="${optGetopts}${optF}:"
-done
-
-### Check the Flags with getopts
-#### Begin the options with a colon for silent error reporting
-while getopts :h${optGetopts} vOptInput; do
-case $vOptInput in
-#### Help option
-# h)
-#  usageMessage
-#  exit 0
-#  ;;
-#### Each Flag and Opiton in turn
- for optFlagKey in ${voptflags[@]}; do
- ${optFlagKey})
-##### Set the argument to match the value of $slug_element
-  local eval ${optsSlugFAK[$optFlagKey]}=$OPTARG
-##### Prepare any multiple choice Options
-###### Two-stage empty set to avoid errors when not a Choice Type
-  local showOptChoices=NULLCHOICES
-  local NULLCHOICES=
-  if [[ "${optsTypeFAK[$optFlagKey]}" = "Choice" ]]; then
-   showOptChoices="voptFC_$optFlagKey"
-  fi
-##### Run the validation function on that Type or if empty say so
-  is${optsTypeFAK[$optFlagKey]} ${!optsSlugFAK[$optFlagKey]} "${optsNameFAK[$optFlagKey]}" "${!showOptChoices}"
-  ;;
- done
-esac
-done
-####DEV: http://wiki.bash-hackers.org/howto/getopts_tutorial
-####     https://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
-####     https://jonalmeida.com/posts/2013/05/26/different-ways-to-implement-flags-in-bash/
-####     https://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
-
-### Put options in correct order
-for optFlagKey in ${voptflags[@]}; do
-ORDEREDOPT="${ORDEREDOPT} ${!optsFAK[$optFlagKey]}"
-done
-
-#done ##DEV: remove if it works, this may be an orphan
-
-### Declare results
-${RUNSERF}OptVal=true
-return 0
+"
+#DEV above needs a function to find all available sub commands for the Surname
 }
-
 
 # Help?
-if [ "$3" == "--h" ] || [ "$3" == "--help" ]; then
-usageMessage
+## Yeo
+if [ "${SURNAME}" == "-h" ] || [ "${SURNAME}" == "--help" ]; then
+usageYeo
+exit 0; fi
+
+## Surname
+if [ "${SUBNAME}" == "-h" ] || [ "${SUBNAME}" == "--help" ]; then
+usageSur
 exit 0; fi
 
 # Run the Serf
-getSetValidation
-getOptValidation 
-${SERFS}/${RUNSERF} ${SERFSET} ${ORDEREDOPT}
-
-
-
-
-
-
-
-
+executioner "${ALLARGS}"

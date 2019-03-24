@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# About message
+aboutMsg="$(cat <<EOU
+
+EOU
+)"
+
+optSerf=":a:b:cd"
+declare -A optName
+declare -A optDesc
+optName[a]=""
+optDesc[a]=""
+optName[b]=""
+optDesc[b]=""
+optName[c]=""
+optDesc[c]=""
+optDesc[d]=""
+
+executioner() {
+while getopts "${optSerf}" Flag; do
+ case $Flag in
+  # Help
+  h)
+    echo "${aboutMsg}"
+    echo "
+    Flag settings:
+    -a ${optName[a]} ${optDesc[a]}
+    -b ${optName[b]} ${optDesc[b]}
+    -c ${optName[c]} ${optDesc[c]}
+    -d ${optDesc[d]}
+    "
+  ;;
+  a)
+    isaz "${OPTARG}"
+    SOa="${OPTARG}"
+  ;;
+  b)
+    isInt "${OPTARG}"
+    SOb="${OPTARG}"
+  ;;
+  c)
+    isDomain "${OPTARG}"
+    SOc="${OPTARG}"
+  ;;
+  d)
+    SOd="-d"
+  ;;
+ esac
+done
+}
