@@ -15,7 +15,15 @@ optName[b]=""
 optDesc[b]=""
 optName[c]=""
 optDesc[c]=""
+optName[d]=""
 optDesc[d]=""
+optName[e]=""
+optDesc[e]=""
+optName[f]=""
+optDesc[f]=""
+optName[g]=""
+optDesc[g]=""
+optDesc[n]=""
 
 executioner() {
 while getopts "${optSerf}" Flag; do
@@ -28,7 +36,11 @@ while getopts "${optSerf}" Flag; do
     -a ${optName[a]} ${optDesc[a]}
     -b ${optName[b]} ${optDesc[b]}
     -c ${optName[c]} ${optDesc[c]}
-    -d ${optDesc[d]}
+    -d ${optName[d]} ${optDesc[d]}
+    -e ${optName[e]} ${optDesc[e]}
+    -f ${optName[f]} ${optDesc[f]}
+    -g ${optName[g]} ${optDesc[g]}
+    -n ${optDesc[n]}
     "
   ;;
   a)
@@ -44,8 +56,59 @@ while getopts "${optSerf}" Flag; do
     SOc="${OPTARG}"
   ;;
   d)
-    SOd="-d"
+    isDomain "${OPTARG}"
+    SOd="${OPTARG}"
+  ;;
+  e)
+    isDomain "${OPTARG}"
+    SOe="${OPTARG}"
+  ;;
+  f)
+    isDomain "${OPTARG}"
+    SOf="${OPTARG}"
+  ;;
+  g)
+    isDomain "${OPTARG}"
+    SOg="${OPTARG}"
+  ;;
+  n)
+    SOn="-n"
   ;;
  esac
 done
+
+# Check requirements or defaults
+if [ -z "${SOa}" ]; then
+  #SOa="DEFAULT" # Uncomment for optional default
+  echo "${optName[a]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+fi
+if [ -z "${SOb}" ]; then
+  #SOb="DEFAULT" # Uncomment for optional default
+  echo "${optName[b]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+fi
+if [ -z "${SOc}" ]; then
+  #SOc="DEFAULT" # Uncomment for optional default
+  echo "${optName[c]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+fi
+if [ -z "${SOd}" ]; then
+  #SOd="DEFAULT" # Uncomment for optional default
+  echo "${optName[d]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+fi
+if [ -z "${SOe}" ]; then
+  #SOe="DEFAULT" # Uncomment for optional default
+  echo "${optName[e]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+fi
+if [ -z "${SOf}" ]; then
+  #SOf="DEFAULT" # Uncomment for optional default
+  echo "${optName[f]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+fi
+if [ -z "${SOg}" ]; then
+  #SOg="DEFAULT" # Uncomment for optional default
+  echo "${optName[g]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+fi
+if [ -z "${SOn}" ]; then
+  SOn="-n" # Uncomment for optional default
+  #echo "${optName[a]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+fi
+
 }
