@@ -37,10 +37,10 @@ isPresent() {
 local Present=$1
 local vvar=$2
 if [ -n $Present ]; then
-isPresent=true; else
-isPresent=false; fi
+isPresent="true"; else
+isPresent="false"; fi
 
-if [ $isPresent = false ]; then
+if [ $isPresent = "false" ]; then
 echo "$vvar must be present."
 usage
 exit 55; fi
@@ -52,8 +52,8 @@ local Choice=$1
 local vvar=$2
 local vchoices=$3
 if [ echo $vchoices | grep $Choice ]; then
-isChoice=true; else
-isChoice=false; fi
+isChoice="true"; else
+isChoice="false"; fi
 
 if [ $isChoice = false ]; then
 echo "$vvar must be one of: $vchoices."
@@ -62,22 +62,46 @@ exit 55; fi
 
 ## NA OR...
 isNAopt() {
-local NAopt=$1
-local vvar=$2
+local NAopt="$1"
+local vvar="$2"
 if [ -n $NA ]; then
-isNAopt=true; else
-isNAopt=false; fi
+isNAopt="true"; else
+isNAopt="false"; fi
 
-if [ $isNAopt = false ]; then
+if [ $isNAopt = "false" ]; then
 echo "$vvar must be present."
+exit 55; fi
+}
+
+## verbTLD
+### Thanks https://stackoverflow.com/a/15394738/10343144
+isVTLD() {
+validTLD=(ink email one city blue vip pink red kiwi cash rocks)
+VTLD="$1"
+if [[ " ${validTLD[@]} " =~ " ${VTLD} " ]]; then
+isVTLD="true"; else
+isVTLD="false"
+exit 55; fi
+}
+
+## Email
+### Thanks https://stackoverflow.com/a/4501833/10343144
+isEmail() {
+local EMAIL="$1"
+
+if [[ $EMAIL =~ '(.+)@(.+)' ]] ; then
+   local user=${BASH_REMATCH[1]}
+   local host=${BASH_REMATCH[2]}
+isEmail="true"; else
+isEmail="false"
 exit 55; fi
 }
 
 ## IP4
 ### Thanks http://www.linuxjournal.com/content/validating-ip-address-bash-script
 isIP4() {
-local IP4=$1
-local vvar=$2
+local IP4="$1"
+local vvar="$2"
 if [[ $IP4 =~ ^[:digit:]{1,3}\.[:digit:]{1,3}\.[:digit:]{1,3}\.[:digit:]{1,3}$ ]]; then
 ### Create 4 separate variables
 OIFS=$IFS
@@ -85,13 +109,13 @@ IFS='.'
 ip=($IP4)
 IFS=$OIFS
  if [[ ${IP4[0]} -le 255 && ${IP4[1]} -le 255 && ${IP4[2]} -le 255 && ${IP4[3]} -le 255 ]]; then
- isIP4=true; else
- isIP4=false; fi
+ isIP4="true"; else
+ isIP4="false"; fi
 else
-isIP4=false;
+isIP4="false";
 fi
 
-if [ $isIP4 = false ]; then
+if [ $isIP4 = "false" ]; then
 echo "$vvar must be a valid IP4 address."
 exit 55; fi
 }
@@ -102,8 +126,8 @@ isIP6() {
 local IP6=$1
 local vvar=$2
 if [ "$IP6" != "${IP6#[:xdigit:]*:}" ] && [ "$IP6" = "${IP6#*[^:xdigit:]}" ] && [ "${IP6#*[:xdigit:][:xdigit:][:xdigit:][:xdigit:][:xdigit:]}" = "${IP6#*:*:*:*:*:*:*:*:*:}" ]; then
-isIP6=true; else
-isIP6=false; fi
+isIP6="true"; else
+isIP6="false"; fi
 
 if [ $isIP6 = false ]; then
 echo "$vvar must be a valid IP6 address."
@@ -115,10 +139,10 @@ isInt() {
 local Int=$1
 local vvar=$2
 if [[ "$Int" =~ [:digit:]+$ ]]; then
-isInt=true; else
-isInt=false; fi
+isInt="true"; else
+isInt="false"; fi
 
-if [ $isInt = false ]; then
+if [ $isInt = "false" ]; then
 echo "$vvar must be a valid integer."
 exit 55; fi
 }
@@ -128,10 +152,10 @@ isFloat() {
 local Float=$1
 local vvar=$2
 if [[ "$Float" =~ [-+]?[:digit:]+\.?[:digit:]*$ ]]; then
-isFloat=true; else
-isFloat=false; fi
+isFloat="true"; else
+isFloat="false"; fi
 
-if [ $isFloat = false ]; then
+if [ $isFloat = "false" ]; then
 echo "$vvar must be a valid integer or decimal."
 exit 55; fi
 }
@@ -142,10 +166,10 @@ isHEX() {
 local HEX=$1
 local vvar=$2
 if [[ "$HEX" =~ [:xdigit:]+$ ]]; then
-isHEX=true; else
-isHEX=false; fi
+isHEX="true"; else
+isHEX="false"; fi
 
-if [ $isHEX = false ]; then
+if [ $isHEX = "false" ]; then
 echo "$vvar must be hexadecimal."
 exit 55; fi
 }
@@ -155,10 +179,10 @@ isaz() {
 local az=$1
 local vvar=$2
 if [[ "$az" =~ [:lower:]+$ ]]; then
-isaz=true; else
-isaz=false; fi
+isaz="true"; else
+isaz="false"; fi
 
-if [ $isaz = false ]; then
+if [ $isaz = "false" ]; then
 echo "$vvar must only include lowercase letters."
 exit 55; fi
 }
@@ -168,10 +192,10 @@ isazAZ() {
 local azAZ=$1
 local vvar=$2
 if [[ "$azAZ" =~ [:alpha:]+$ ]]; then
-isazAZ=true; else
-isazAZ=false; fi
+isazAZ="true"; else
+isazAZ="false"; fi
 
-if [ $isazAZ = false ]; then
+if [ $isazAZ = "false" ]; then
 echo "$vvar must only include uppercase and/or lowercase letters."
 exit 55; fi
 }
@@ -181,10 +205,10 @@ isaz09() {
 local az09=$1
 local vvar=$2
 if [[ "$az09" =~ [[:lower:][:digit:]]+$ ]]; then
-isaz09=true; else
-isaz09=false; fi
+isaz09="true"; else
+isaz09="false"; fi
 
-if [ $isaz09 = false ]; then
+if [ $isaz09 = "false" ]; then
 echo "$vvar must only include lowercase letters and/or digits."
 exit 55; fi
 }
@@ -194,10 +218,10 @@ isAZ09() {
 local AZ09=$1
 local vvar=$2
 if [[ "$AZ09" =~ [[:upper:][:digit:]]+$ ]]; then
-isAZ09=true; else
-isAZ09=false; fi
+isAZ09="true"; else
+isAZ09="false"; fi
 
-if [ $isAZ09 = false ]; then
+if [ $isAZ09 = "false" ]; then
 echo "$vvar must only include lowercase letters and/or digits."
 exit 55; fi
 }
@@ -207,10 +231,10 @@ isazAZ09() {
 local azAZ09=$1
 local vvar=$2
 if [[ "$azAZ09" =~ [:alnum:]+$ ]]; then
-isazAZ09=true; else
-isazAZ09=false; fi
+isazAZ09="true"; else
+isazAZ09="false"; fi
 
-if [ $isazAZ09 = false ]; then
+if [ $isazAZ09 = "false" ]; then
 echo "$vvar must only include uppercase letters, lowercase letters, and/or digits."
 exit 55; fi
 }
@@ -220,10 +244,10 @@ isazAZ09Punct() {
 local azAZ09Punct=$1
 local vvar=$2
 if [[ "$azAZ09Punct" =~ [:graph:]+$ ]]; then
-isazAZ09Punct=true; else
-isazAZ09Punct=false; fi
+isazAZ09Punct="true"; else
+isazAZ09Punct="false"; fi
 
-if [ $isazAZ09Punct = false ]; then
+if [ $isazAZ09Punct = "false" ]; then
 echo "$vvar must only include uppercase letters, lowercase letters, digits, and/or punctuation."
 exit 55; fi
 }
@@ -233,10 +257,10 @@ isFileDir() {
 local FileDir=$1
 local vvar=$2
 if [[ "$FileDir" =~ [[:alnum:]\.\-_]+$ ]]; then
-isFileDir=true; else
-isFileDir=false; fi
+isFileDir="true"; else
+isFileDir="false"; fi
 
-if [ $isFileDir = false ]; then
+if [ $isFileDir = "false" ]; then
 echo "$vvar must be a \"normal\" filename: alphanumeric; CAPS, hyphen, and underscore allowed; but no other special characters or spaces."
 exit 55; fi
 }
@@ -246,10 +270,10 @@ isURL() {
 local Domain=$1
 local vvar=$2
 if [[ "$Domain" =~ "http"+[s]?"://"+[[:lower:][:digit:]\.\-_]+\.[:lower:]+$ ]]; then
-isDomain=true; else
-isDomain=false; fi
+isDomain="true"; else
+isDomain="false"; fi
 
-if [ $isDomain = false ]; then
+if [ $isDomain = "false" ]; then
 echo "$vvar must be a \"normal\" URL: domain, including alphanumeric characters, underscore, and hyphen, subdomains allowed, preceeded by either http:// or https://"
 exit 55; fi
 }
@@ -259,10 +283,10 @@ isDomain() {
 local Domain=$1
 local vvar=$2
 if [[ "$Domain" =~ [[:lower:][:digit:]\.\-_]+\.[:lower:]+$ ]]; then
-isDomain=true; else
-isDomain=false; fi
+isDomain="true"; else
+isDomain="false"; fi
 
-if [ $isDomain = false ]; then
+if [ $isDomain = "false" ]; then
 echo "$vvar must be a \"normal\" domain, including alphanumeric characters, underscore, and hyphen, subdomains allowed if included, ie:  inksaverb.com  sub.inkisaverb.com  etc.sub.inkisaverb.com"
 exit 55; fi
 }
@@ -272,10 +296,10 @@ isverbTLD() {
 local verbTLD=$1
 local vvar=$2
 if [ echo ${VERBTLDS[@]} | grep $verbTLD ]; then
-isverbTLD=true; else
-isverbTLD=false; fi
+isverbTLD="true"; else
+isverbTLD="false"; fi
 
-if [ $isverbTLD = false ]; then
+if [ $isverbTLD = "false" ]; then
 echo "$vvar must a valid verb TLD."
 exit 55; fi
 }
