@@ -1,28 +1,28 @@
 # This is the setting file for the inkVerb yeoman "yeo"
 
 # Installed "verb" directory
-#vDir=/opt/verb
+#vDi"r=/opt/verb"
 #Dev:
-vDir=~/Dropbox/DocTools/Dev/vrk-verb-ink/yeo
+vDir="~/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
 
 # Installed "yeo" location
-#yDir=/usr/bin
+#yDir"=/usr/bin"
 #Dev:
-yDir=~/Dropbox/DocTools/Dev/vrk-verb-ink/yeo
+yDir="~/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
 
 # Yeo
-YEOFORT=$vDir/
-YEOPB=$vDir/phonebook
+YEOFORT="${vDir}/"
+YEOPB="${vDir}/phonebook"
 
 # Verb
-SERFS=$vDir/serfs
-CONF=$vDir/conf
-DONJON=$vDir/donjon
-DROIDS=$vDir/droids
-TOOLS=$vDir/tools
-REPO=$vDir/repo
-BOSS=$vDir/boss
-DOCS=$vDir/docs
+SERFS="${vDir}/serfs"
+CONF="${vDir}/conf"
+DONJON="${vDir}/donjon"
+DROIDS="${vDir}/droids"
+TOOLS="${vDir}/tools"
+REPO="${vDir}/repo"
+BOSS="${vDir}/boss"
+DOCS="${vDir}/docs"
 
 # Settings
 VERBTLDS=( city one ink email blue kiwi red pink vip cash rocks )

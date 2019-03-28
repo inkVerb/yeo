@@ -1,0 +1,26 @@
+#!/bin/sh
+#inkVerbSerf!
+
+# This is a family work sample serf that talks
+## These are additional notes about the serf
+## These are more additional notes about how it talks
+
+# How to use:
+## ./famworktalk [ hex color (no hash symbol) ] [ Full Name ] [ Phone ] [ Zip code optional ]
+
+# Eg:
+## ./famworktalk f71771 "John M Smith" 9899899999
+## ./famworktalk ff55ff "Mike Malcomson" 3123294000 60610
+
+
+HEXvar="$1"
+FNamevar="$2"
+Phonevar="$3"
+Zipvar="$4"
+
+echo "
+Color: ${HEXvar}
+Name: ${FNamevar}
+Phone: ${Phonevar}
+Zip: ${Zipvar}
+"

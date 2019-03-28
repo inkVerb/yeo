@@ -1,0 +1,17 @@
+#!/bin/sh
+#inkVerbSerf!
+
+# This is a family work sample serf that checks if a selection is from among available options
+## These are additional notes about the serf
+## These are more additional notes about how it validates
+
+# How to use:
+## ./famworkopt [ option to validate ]
+
+# Eg:
+## ./famworkopt car
+
+
+Optvar="$1"
+
+echo "Your choice ${Optvar} is accaptable."

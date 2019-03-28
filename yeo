@@ -73,14 +73,37 @@ echo "$vvar must be present."
 exit 55; fi
 }
 
-## verbTLD
+## Option Select
 ### Thanks https://stackoverflow.com/a/15394738/10343144
-isVTLD() {
-validTLD=(ink email one city blue vip pink red kiwi cash rocks)
+isOption() {
+## The array "validOptions" must be set in the settnigs file
 VTLD="$1"
 if [[ " ${validTLD[@]} " =~ " ${VTLD} " ]]; then
 isVTLD="true"; else
 isVTLD="false"
+exit 55; fi
+}
+
+## verbTLD
+### Thanks https://stackoverflow.com/a/15394738/10343144
+isVTLD() {
+validTLD=(ink email o ne city blue vip pink red kiwi cash rocks)
+VTLD="$1"
+if [[ " ${validTLD[@]} " =~ " ${VTLD} " ]]; then
+isVTLD="true"; else
+isVTLD="false"
+exit 55; fi
+}
+
+## Length
+### Thanks https://unix.stackexchange.com/a/145159/315069
+isXlong() {
+local XSTRING="$1"
+local XLENGTH="$2"
+
+if [[ "${#XSTRING}" == "${XLENGTH}" ]] ; then
+isXlong="true"; else
+isXlong="false"
 exit 55; fi
 }
 
@@ -89,7 +112,7 @@ exit 55; fi
 isEmail() {
 local EMAIL="$1"
 
-if [[ $EMAIL =~ '(.+)@(.+)' ]] ; then
+if [[ "$EMAIL" =~ '(.+)@(.+)' ]] ; then
    local user=${BASH_REMATCH[1]}
    local host=${BASH_REMATCH[2]}
 isEmail="true"; else
@@ -108,7 +131,7 @@ OIFS=$IFS
 IFS='.'
 ip=($IP4)
 IFS=$OIFS
- if [[ ${IP4[0]} -le 255 && ${IP4[1]} -le 255 && ${IP4[2]} -le 255 && ${IP4[3]} -le 255 ]]; then
+ if [[ "${IP4[0]}" -le 255 && "${IP4[1]}" -le 255 && "${IP4[2]}" -le 255 && "${IP4[3]}" -le "255" ]]; then
  isIP4="true"; else
  isIP4="false"; fi
 else

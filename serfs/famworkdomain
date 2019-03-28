@@ -1,0 +1,25 @@
+#!/bin/sh
+#inkVerbSerf!
+
+# This is a family work sample serf that validates domain information
+## These are additional notes about the serf
+## These are more additional notes about how it validates
+
+# How to use:
+## ./famworkdomain [ email ] [ IP4 ] [ IP6 ] [ domain ]
+
+# Eg:
+## ./famworkdomain j@joyous.verb.ink 555.555.555.555 6089:ad:1 inkisaverb.com
+
+
+Emailvar="$1"
+IP4var="$2"
+IP6var="$3"
+Domvar="$4"
+
+echo "
+Email: ${Emailvar}
+IPv4: ${IP4var}
+IPv6: ${IP6var}
+Domain: ${Domvar}
+"

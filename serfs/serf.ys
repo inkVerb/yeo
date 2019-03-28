@@ -6,9 +6,6 @@ aboutMsg="$(cat <<EOU
 EOU
 )"
 
-# If using isOption() Option Select
-#validOptions=()
-
 optSerf=":a:b:cd"
 declare -A optName
 declare -A optDesc

@@ -7,7 +7,7 @@ EOU
 )"
 
 # If using isOption() Option Select
-#validOptions=()
+validOptions=(car door bicycle desk)
 
 optSerf=":a:b:cd"
 declare -A optName
