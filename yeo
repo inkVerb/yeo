@@ -12,10 +12,10 @@
 
 # Put the path to the setting file here
 #YEOSET=/opt/yeo/yeo.set
-YEOSET=~/Dropbox/DocTools/Dev/vrk-verb-ink/yeo/yeo.set
+YEOSET="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo/yeo.set"
 
 # Include the setting file
-. ${YEOSET}
+source ${YEOSET}
 
 
 # Settings, Options, and input variables
@@ -28,7 +28,8 @@ ALLARGS=($@)
 
 
 ## Get Serf Yeoman settings meta
-source ${SERFS}/${SURNAME}${SUBNAME}.ys
+. ${SERFS}/${SURNAME}${SUBNAME}.ys
+echo "${SERFS}/${SURNAME}${SUBNAME}.ys"
 
 # Validity check functions
 
@@ -397,7 +398,7 @@ cat ${yDir}/phonebook
 
 usageSur() {
 echo "
-
+**Help information should go here**
 "
 #DEV above needs a function to find all available sub commands for the Surname
 }

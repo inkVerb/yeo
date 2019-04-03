@@ -3,12 +3,12 @@
 # Installed "verb" directory
 #vDi"r=/opt/verb"
 #Dev:
-vDir="~/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
+vDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
 
 # Installed "yeo" location
 #yDir"=/usr/bin"
 #Dev:
-yDir="~/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
+yDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
 
 # Yeo
 YEOFORT="${vDir}/"
