@@ -114,4 +114,10 @@ if [ -z "${SOn}" ]; then
   #echo "${optName[a]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
 fi
 
+# Exit if failed
+if [ "${yeoFail}" = "true" ]; then
+  exit 0;
+fi
+
+
 }

@@ -29,7 +29,6 @@ ALLARGS=($@)
 
 ## Get Serf Yeoman settings meta
 . ${SERFS}/${SURNAME}${SUBNAME}.ys
-echo "${SERFS}/${SURNAME}${SUBNAME}.ys"
 
 # Validity check functions
 

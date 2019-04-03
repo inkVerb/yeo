@@ -1,4 +1,5 @@
 # This is the setting file for the inkVerb yeoman "yeo"
+## Paths must be absolute
 
 # Installed "verb" directory
 #vDi"r=/opt/verb"
