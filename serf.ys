@@ -28,7 +28,7 @@ optName[g]=""
 optDesc[g]=""
 optDesc[n]=""
 
-executioner() {
+argCheck() {
 while getopts "${optSerf}" Flag; do
  case $Flag in
   # Help
