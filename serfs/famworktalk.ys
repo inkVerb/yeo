@@ -83,39 +83,40 @@ done
 # Check requirements or defaults
 if [ -z "${SOa}" ]; then
   #SOa="DEFAULT" # Uncomment for optional default
-  echo "${optName[a]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; yeoFail="true" # Uncomment if required
+  echo "${optName[a]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOb}" ]; then
   #SOb="DEFAULT" # Uncomment for optional default
-  echo "${optName[b]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; yeoFail="true" # Uncomment if required
+  echo "${optName[b]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOc}" ]; then
   #SOc="DEFAULT" # Uncomment for optional default
-  echo "${optName[c]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; yeoFail="true" # Uncomment if required
+  echo "${optName[c]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOd}" ]; then
   #SOd="DEFAULT" # Uncomment for optional default
-  echo "${optName[d]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; yeoFail="true" # Uncomment if required
+  echo "${optName[d]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOe}" ]; then
   #SOe="DEFAULT" # Uncomment for optional default
-  echo "${optName[e]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; yeoFail="true" # Uncomment if required
+  echo "${optName[e]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOf}" ]; then
   #SOf="DEFAULT" # Uncomment for optional default
-  echo "${optName[f]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; yeoFail="true" # Uncomment if required
+  echo "${optName[f]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOg}" ]; then
   #SOg="DEFAULT" # Uncomment for optional default
-  echo "${optName[g]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; yeoFail="true" # Uncomment if required
+  echo "${optName[g]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOn}" ]; then
   SOn="-n" # Uncomment for optional default
-  #echo "${optName[a]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+  #echo "${optName[a]} must be set."; exit 0 # Uncomment if required
 fi
 
 # Exit if failed
 if [ "${yeoFail}" = "true" ]; then
+  echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
   exit 0;
 fi
 
