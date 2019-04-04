@@ -22,8 +22,8 @@ source ${yDir}/yeo.functions
 export SURNAME=${1}
 export SUBNAME=${2}
 shift 2
-export ALLARGS=($@)
-echo "${ALLARGS}"
+ALLARGS="$@"
+
 # Help?
 ## Yeo
 if [ "${SURNAME}" == "-h" ] || [ "${SURNAME}" == "--help" ]; then
@@ -47,4 +47,4 @@ getSubnames "${SURNAME}"
 exit 0; fi
 
 # Run the Serf
-${SERFS}/${SURNAME}${SUBNAME}.ys "${ALLARGS}"
+${SERFS}/${SURNAME}${SUBNAME}.ys ${ALLARGS}

@@ -1,18 +1,22 @@
 #!/bin/bash
 
-## Include the settings & functions
+# Set the serf name
+SURFNAME="famworkopt"
+
+# Include the settings & functions
 source ${YEOSET}
+source ${yDir}/yeo.functions
 
 # About message
 aboutMsg="$(cat <<EOU
-This is a family work routine that manages domains.
+This is a family work routine that manages options.
 EOU
 )"
 
 # If using isOption() Option Select
 validOptions=(car door bicycle desk)
 
-optSerf="a:b:c:d:h"
+optSerf="a:b:c:d:e:f:g:nh"
 declare -A optName
 declare -A optDesc
 optName[a]=""
@@ -31,6 +35,7 @@ optName[g]=""
 optDesc[g]=""
 optDesc[n]=""
 
+# Check the variables
 while getopts "${optSerf}" Flag; do
  case $Flag in
   # Help
@@ -125,4 +130,4 @@ if [ "${yeoFail}" = "true" ]; then
   exit 0;
 fi
 
-${SERFS}/famworkdomain "${SOa} ${SOb} ${isIP6} ${SOd}"
+"${SERFS}/${SURFNAME}" "${SOa}" "${SOb}" "${SOc}" "${SOd}" "${SOe}" "${SOf}" "${SOg}" "${SOn}"

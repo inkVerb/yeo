@@ -1,15 +1,22 @@
 #!/bin/bash
 
+# Set the serf name
+SURFNAME="famworktalk"
+
+# Include the settings & functions
+source ${YEOSET}
+source ${yDir}/yeo.functions
+
 # About message
 aboutMsg="$(cat <<EOU
-
+This is a family work routine that talks back.
 EOU
 )"
 
 # If using isOption() Option Select
 #validOptions=()
 
-optSerf=":a:b:cd"
+optSerf=":a:b:c:d:e:f:g:nh"
 declare -A optName
 declare -A optDesc
 optName[a]=""
@@ -28,7 +35,7 @@ optName[g]=""
 optDesc[g]=""
 optDesc[n]=""
 
-argCheck() {
+# Check the variables
 while getopts "${optSerf}" Flag; do
  case $Flag in
   # Help
@@ -123,4 +130,4 @@ if [ "${yeoFail}" = "true" ]; then
   exit 0;
 fi
 
-}
+"${SERFS}/${SURFNAME}" "${SOa}" "${SOb}" "${SOc}" "${SOd}" "${SOe}" "${SOf}" "${SOg}" "${SOn}"

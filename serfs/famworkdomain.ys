@@ -1,6 +1,9 @@
 #!/bin/bash
 
-## Include the settings & functions
+# Set the serf name
+SURFNAME="famworkdomain"
+
+# Include the settings & functions
 source ${YEOSET}
 source ${yDir}/yeo.functions
 
@@ -92,4 +95,4 @@ fi
 
 
 # Run the serf
-${SERFS}/famworkdomain "${SOa} ${SOb} ${isIP6} ${SOd}"
+"${SERFS}/${SURFNAME}" "${SOa}" "${SOb}" "${SOc}" "${SOd}"
