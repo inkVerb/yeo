@@ -1,8 +1,19 @@
 #!/bin/bash
 
-## Include the settings & functions
+# Put the path to the setting file here
+#YEOSET=/opt/yeo/yeo.set
+YEOSET="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo/yeo.set"
+## Include the setting file
 source ${YEOSET}
-source ${yDir}/yeo.functions
+source ${SERFS}/test.functions
+
+# Settings, Options, and input variables
+## Parse arguments
+SURNAME=${1}
+SUBNAME=${2}
+shift 2
+ALLARGS=($@)
+
 
 # About message
 aboutMsg="$(cat <<EOU
@@ -32,7 +43,6 @@ while getopts "${optSerf}" Flag; do
   h)
     SOh="true"
   ;;
-  # Flags
   a)
 #    isEmail "${OPTARG}"
     SOa="${OPTARG}"
@@ -52,7 +62,7 @@ while getopts "${optSerf}" Flag; do
  esac
 done
 
-
+############## This breaks
 # Check if help
 if [ "${SOh}" = "true" ]; then
   echo "${aboutMsg}"
@@ -89,7 +99,8 @@ if [ "${yeoFail}" = "true" ]; then
   echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
   exit 0;
 fi
+###########################
 
 
-# Run the serf
-${SERFS}/famworkdomain "${SOa} ${SOb} ${isIP6} ${SOd}"
+
+echo "this: ${SOa} ${SOb} ${SOc} ${SOd}"

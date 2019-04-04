@@ -2,28 +2,28 @@
 ## Paths must be absolute
 
 # Installed "verb" directory
-#vDi"r=/opt/verb"
+#export vDi"r=/opt/verb"
 #Dev:
-vDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
+export vDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
 
 # Installed "yeo" location
-#yDir"=/usr/bin"
+#export yDir"=/usr/bin"
 #Dev:
-yDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
+export yDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
 
 # Yeo
-YEOFORT="${vDir}/"
-YEOPB="${vDir}/phonebook"
+export YEOFORT="${yDir}/"
+export YEOPB="${yDir}/phonebook"
 
 # Verb
-SERFS="${vDir}/serfs"
-CONF="${vDir}/conf"
-DONJON="${vDir}/donjon"
-DROIDS="${vDir}/droids"
-TOOLS="${vDir}/tools"
-REPO="${vDir}/repo"
-BOSS="${vDir}/boss"
-DOCS="${vDir}/docs"
+export SERFS="${vDir}/serfs"
+export CONF="${vDir}/conf"
+export DONJON="${vDir}/donjon"
+export DROIDS="${vDir}/droids"
+export TOOLS="${vDir}/tools"
+export REPO="${vDir}/repo"
+export BOSS="${vDir}/boss"
+export DOCS="${vDir}/docs"
 
 # Settings
-VERBTLDS=( city one ink email blue kiwi red pink vip cash rocks )
+export VERBTLDS=( city one ink email blue kiwi red pink vip cash rocks )

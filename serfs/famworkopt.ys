@@ -1,15 +1,18 @@
-#!/bin/sh
+#!/bin/bash
+
+## Include the settings & functions
+source ${YEOSET}
 
 # About message
 aboutMsg="$(cat <<EOU
-
+This is a family work routine that manages domains.
 EOU
 )"
 
 # If using isOption() Option Select
 validOptions=(car door bicycle desk)
 
-optSerf=":a:b:cd"
+optSerf="a:b:c:d:h"
 declare -A optName
 declare -A optDesc
 optName[a]=""
@@ -28,23 +31,11 @@ optName[g]=""
 optDesc[g]=""
 optDesc[n]=""
 
-argCheck() {
 while getopts "${optSerf}" Flag; do
  case $Flag in
   # Help
   h)
-    echo "${aboutMsg}"
-    echo "
-    Flag settings:
-    -a ${optName[a]} ${optDesc[a]}
-    -b ${optName[b]} ${optDesc[b]}
-    -c ${optName[c]} ${optDesc[c]}
-    -d ${optName[d]} ${optDesc[d]}
-    -e ${optName[e]} ${optDesc[e]}
-    -f ${optName[f]} ${optDesc[f]}
-    -g ${optName[g]} ${optDesc[g]}
-    -n ${optDesc[n]}
-    "
+    SOh="true"
   ;;
   a)
     isaz "${OPTARG}"
@@ -79,6 +70,20 @@ while getopts "${optSerf}" Flag; do
   ;;
  esac
 done
+
+# Check if help
+if [ "${SOh}" = "true" ]; then
+  echo "${aboutMsg}"
+  echo "
+  Flag settings:
+  -a ${optName[a]} ${optDesc[a]}
+  -b ${optName[b]} ${optDesc[b]}
+  -c ${optName[c]} ${optDesc[c]}
+  -d ${optName[d]} ${optDesc[d]}
+  "
+  exit 0
+fi
+
 
 # Check requirements or defaults
 if [ -z "${SOa}" ]; then
@@ -120,4 +125,4 @@ if [ "${yeoFail}" = "true" ]; then
   exit 0;
 fi
 
-}
+${SERFS}/famworkdomain "${SOa} ${SOb} ${isIP6} ${SOd}"
