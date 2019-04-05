@@ -1,4 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
+# Set the serf name
+SURFNAME="surnamesub"
+
+# Include the settings & functions
+source ${YEOSET}
+source ${yDir}/yeo.functions
 
 # About message
 aboutMsg="$(cat <<EOU
@@ -9,7 +16,7 @@ EOU
 # If using isOption() Option Select
 #validOptions=()
 
-optSerf=":a:b:cd"
+optSerf=":a:b:c:d:e:f:g:nh"
 declare -A optName
 declare -A optDesc
 optName[a]=""
@@ -28,7 +35,7 @@ optName[g]=""
 optDesc[g]=""
 optDesc[n]=""
 
-argCheck() {
+# Check the variables
 while getopts "${optSerf}" Flag; do
  case $Flag in
   # Help
@@ -85,31 +92,31 @@ fi
 # Check requirements or defaults
 if [ -z "${SOa}" ]; then
   #SOa="DEFAULT" # Uncomment for optional default
-  echo "${optName[a]} must be set."; exit 0 # Uncomment if required
+  echo "${optName[a]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOb}" ]; then
   #SOb="DEFAULT" # Uncomment for optional default
-  echo "${optName[b]} must be set."; exit 0 # Uncomment if required
+  echo "${optName[b]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOc}" ]; then
   #SOc="DEFAULT" # Uncomment for optional default
-  echo "${optName[c]} must be set."; exit 0 # Uncomment if required
+  echo "${optName[c]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOd}" ]; then
   #SOd="DEFAULT" # Uncomment for optional default
-  echo "${optName[d]} must be set."; exit 0 # Uncomment if required
+  echo "${optName[d]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOe}" ]; then
   #SOe="DEFAULT" # Uncomment for optional default
-  echo "${optName[e]} must be set."; exit 0 # Uncomment if required
+  echo "${optName[e]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOf}" ]; then
   #SOf="DEFAULT" # Uncomment for optional default
-  echo "${optName[f]} must be set."; exit 0 # Uncomment if required
+  echo "${optName[f]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOg}" ]; then
   #SOg="DEFAULT" # Uncomment for optional default
-  echo "${optName[g]} must be set."; exit 0 # Uncomment if required
+  echo "${optName[g]} must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOn}" ]; then
   SOn="-n" # Uncomment for optional default
@@ -122,5 +129,4 @@ if [ "${yeoFail}" = "true" ]; then
   exit 0;
 fi
 
-
-}
+"${SERFS}/${SURFNAME}" "${SOa}" "${SOb}" "${SOc}" "${SOd}" "${SOe}" "${SOf}" "${SOg}" "${SOn}"

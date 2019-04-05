@@ -37,19 +37,19 @@ while getopts "${optSerf}" Flag; do
   ;;
   # Flags
   a)
-#    isEmail "${OPTARG}"
+    isEmail "${OPTARG}" "${optName[a]}"
     SOa="${OPTARG}"
   ;;
   b)
-#    isIP4 "${OPTARG}"
+    isIP4 "${OPTARG}" "${optName[b]}"
     SOb="${OPTARG}"
   ;;
   c)
-#    isIP6 "${OPTARG}"
+    isIP6 "${OPTARG}" "${optName[c]}"
     SOc="${OPTARG}"
   ;;
   d)
-#    isDomain "${OPTARG}"
+    isDomain "${OPTARG}" "${optName[d]}"
     SOd="${OPTARG}"
   ;;
  esac
@@ -92,7 +92,6 @@ if [ "${yeoFail}" = "true" ]; then
   echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
   exit 0;
 fi
-
 
 # Run the serf
 "${SERFS}/${SURFNAME}" "${SOa}" "${SOb}" "${SOc}" "${SOd}"

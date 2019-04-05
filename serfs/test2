@@ -1,0 +1,22 @@
+#!/bin/bash
+
+testedvar="$1"
+testdev2="$2"
+
+testFunction() {
+local CHOICE="$1"
+local vvar="Choices"
+local iCHOICES="$2"
+local aCHOICES=(${iCHOICES})
+if [[ " ${aCHOICES[@]} " =~ " ${CHOICE} " ]]; then
+  echo true
+
+isChoice="true"; else
+isChoice="false"; fi
+
+if [ "${isChoice}" = "false" ]; then
+echo "${vvar} are: ${aCHOICES[@]}"
+exit 0; fi
+}
+
+testFunction "$testedvar" "$testdev2"

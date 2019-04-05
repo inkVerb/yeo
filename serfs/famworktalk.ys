@@ -89,7 +89,6 @@ if [ "${SOh}" = "true" ]; then
   exit 0
 fi
 
-
 # Check requirements or defaults
 if [ -z "${SOa}" ]; then
   #SOa="DEFAULT" # Uncomment for optional default
