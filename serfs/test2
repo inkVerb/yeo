@@ -4,18 +4,16 @@ testedvar="$1"
 testdev2="$2"
 
 testFunction() {
-local CHOICE="$1"
-local vvar="Choices"
-local iCHOICES="$2"
-local aCHOICES=(${iCHOICES})
-if [[ " ${aCHOICES[@]} " =~ " ${CHOICE} " ]]; then
+local azAZ09punct="$1"
+local vvar="English letters & numbers"
+local VALIDregex="^(https?|file|s?ftp|itpc):///?([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])/[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$"
+if [[ "${azAZ09punct}" =~ ${VALIDregex} ]]; then
   echo true
+isazAZ09punct="true"; else
+isazAZ09punct="false"; fi
 
-isChoice="true"; else
-isChoice="false"; fi
-
-if [ "${isChoice}" = "false" ]; then
-echo "${vvar} are: ${aCHOICES[@]}"
+if [ "${isazAZ09punct}" = "false" ]; then
+echo "${vvar} only include uppercase letters, lowercase letters, and/or digits."
 exit 0; fi
 }
 

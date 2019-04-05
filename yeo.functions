@@ -197,6 +197,20 @@ echo "${vvar} only include uppercase letters, lowercase letters, and/or digits."
 exit 0; fi
 }
 
+## azAZ09punct
+isazAZ09punct() {
+local azAZ09punct="$1"
+local vvar="English letters & numbers"
+local VALIDregex="^([-A-Za-z0-9\+&@#%?=~*_|!:,.;])*$"
+if [[ "${azAZ09punct}" =~ ${VALIDregex} ]]; then
+isazAZ09punct="true"; else
+isazAZ09punct="false"; fi
+
+if [ "${isazAZ09punct}" = "false" ]; then
+echo "${vvar} only include uppercase letters, lowercase letters, and/or digits."
+exit 0; fi
+}
+
 ## GraphChar (alphanumeric & Punctuation & Certain Symbol Characters)
 isGraphChar() {
 local GRAPHCHAR="$1"
@@ -239,11 +253,11 @@ echo "${vvar} must be a \"normal\" filename: alphanumeric; CAPS, hyphen, and und
 exit 0; fi
 }
 
-## URL (http{s}://[az09.].az)
+## URL ({s}ftp itpc file http{s} ://[az09.].az)
 isSpecialURL() {
 local URL="$1"
 local vvar="URL"
-local SURLregex="^(https?|file|s?ftp|itpc):///?[-A-Za-z0-9\+&@#%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$"
+local SURLregex="^(https?|file|s?ftp|itpc):///?([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])/[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$"
 if [[ "${URL}" =~ ${SURLregex} ]]; then
 isSpecialURL="true"; else
 isSpecialURL="false"; fi
@@ -253,11 +267,11 @@ echo "${vvar} must be a \"functional\" URL: preceeded by (s)ftp:// or file:// or
 exit 0; fi
 }
 
-## URL (http{s}://[az09.].az)
+## URL (http{s}://[az09.].az/...)
 isURL() {
 local URL="$1"
 local vvar="URL"
-local URLregex="^(https?)://[-A-Za-z0-9\+&@#%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$"
+local URLregex="^(https?|file|s?ftp|itpc)://([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])/[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$"
 if [[ "${URL}" =~ ${URLregex} ]]; then
 isURL="true"; else
 isURL="false"; fi
