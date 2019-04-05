@@ -4,17 +4,7 @@ testedvar="$1"
 testdev2="$2"
 
 testFunction() {
-local azAZ09punct="$1"
-local vvar="English letters & numbers"
-local VALIDregex="^(https?|file|s?ftp|itpc):///?([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])/[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$"
-if [[ "${azAZ09punct}" =~ ${VALIDregex} ]]; then
-  echo true
-isazAZ09punct="true"; else
-isazAZ09punct="false"; fi
-
-if [ "${isazAZ09punct}" = "false" ]; then
-echo "${vvar} only include uppercase letters, lowercase letters, and/or digits."
-exit 0; fi
+TEST FUNCTION HERE
 }
 
 testFunction "$testedvar" "$testdev2"
