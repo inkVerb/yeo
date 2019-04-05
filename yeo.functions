@@ -5,6 +5,42 @@
 
 # Validity check functions
 
+
+
+## Time zone (+08:00, -05:00, etc)
+isPHPzone() {
+local tZONE="$1"
+local vvar="Time zone (number)"
+local VALIDregex="[+-][0-9]{2}:[0-9]{2}"
+if [[ "${tZONE}" =~ ${VALIDregex} ]]; then
+isPHPzone="true"; else
+isPHPzone="false"; fi
+
+if [ "${isPHPzone}" = "false" ]; then
+echo "${vvar} must follow +HH:MM."
+exit 0; fi
+}
+
+## PHP time city
+### This validates a choice from accepted PHP cities at https://www.php.net/manual/en/timezones.php
+isPHPcity() {
+local tCITY="$1"
+local vvar="PHP time zone city"
+if grep -qr "\b${tCITY}\b" ${PHPCITIES}; then
+isPHPcity="true"; else
+isPHPcity="false"; fi
+
+if [ "${isPHPcity}" = "false" ]; then
+echo "${vvar} must be an accepted city, such as: \"Asia/Hong_Kong\"
+Full list here: https://www.php.net/manual/en/timezones.php"
+exit 0; fi
+}
+
+### Show the accepted PHP cities
+showPHPcities() {
+cat "${PHPCITIES}"
+}
+
 ## Choice Select
 ### This validates a choice from a set of selected choices (in case an existing choice function is not available)
 ### Usage: isChoice CHOICE "CHOICE1 CHOICE2 CHOICE3 etc"

@@ -2,9 +2,10 @@
 
 testedvar="$1"
 testdev2="$2"
-
+yDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
+PHPCITIES="${yDir}/PHPcities"
 testFunction() {
-TEST FUNCTION HERE
+cat "${PHPCITIES}"
 }
 
 testFunction "$testedvar" "$testdev2"
