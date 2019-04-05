@@ -371,10 +371,12 @@ cat ${YEOPB}
 ## Get all subnames for the surname
 getSubnames() {
 SURNAME="$1"
-for SUBNAME in ${SERFS}/${SURNAME}*; do
-listSubName=$(echo ${SUBNAME} | sed "s/${SURNAME}//")
-echo ${listSubName}
-done
+if grep -q "${SURNAME}" ${YEOPB}; then
+  for SUBNAME in ${SERFS}/${SURNAME}*.ys; do
+  listSubName=$(echo "${SUBNAME}" | sed s:${SERFS}/:: | sed "s/${SURNAME}//" | sed "s/\.ys//")
+  echo "${listSubName}"
+  done
+fi
 }
 
 

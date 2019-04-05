@@ -13,7 +13,7 @@ export yDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
 
 # Yeo
 export YEOFORT="${yDir}/"
-export YEOPB="${yDir}/phonebook"
+export YEOPB="${yDir}/phonebooks/surnames.pb"
 export PHPCITIES="${yDir}/PHPcities"
 
 # Verb
