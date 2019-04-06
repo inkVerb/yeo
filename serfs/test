@@ -1,104 +1,14 @@
 #!/bin/bash
 
-# Put the path to the setting file here
-#YEOSET=/opt/yeo/yeo.set
-YEOSET="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo/yeo.set"
-## Include the setting file
-source ${YEOSET}
-source ${SERFS}/test.functions
+testedvar="$1"
+testdev2="$2"
+yDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
+YEOPB="${yDir}/phonebooks/surnames.pb"
+vDir="/home/jc/Dropbox/DocTools/Dev/vrk-verb-ink/yeo"
+SERFS="${vDir}/serfs"
 
-# Settings, Options, and input variables
-## Parse arguments
-SURNAME=${1}
-SUBNAME=${2}
-shift 2
-ALLARGS="$@"
+testFunction() {
+TEST FUNCTION HERE
+}
 
-
-# About message
-aboutMsg="$(cat <<EOU
-This is sets the domain and IP information according to your email.
-EOU
-)"
-
-# If using isOption() Option Select
-#validOptions=()
-
-optSerf="a:b:c:d:h"
-declare -A optName
-declare -A optDesc
-optName[a]="Email"
-optDesc[a]="The email address"
-optName[b]="IPV4"
-optDesc[b]="IP v4 address"
-optName[c]="IPV6"
-optDesc[c]="IP v6 address (expanded or short)"
-optName[d]="Domain"
-optDesc[d]="The domain"
-
-# Check the variables
-while getopts "${optSerf}" Flag; do
- case $Flag in
-  # Help
-  h)
-    SOh="true"
-  ;;
-  a)
-#    isEmail "${OPTARG}"
-    SOa="${OPTARG}"
-  ;;
-  b)
-#    isIP4 "${OPTARG}"
-    SOb="${OPTARG}"
-  ;;
-  c)
-#    isIP6 "${OPTARG}"
-    SOc="${OPTARG}"
-  ;;
-  d)
-#    isDomain "${OPTARG}"
-    SOd="${OPTARG}"
-  ;;
- esac
-done
-
-############## This breaks
-# Check if help
-if [ "${SOh}" = "true" ]; then
-  echo "${aboutMsg}"
-  echo "
-  Flag settings:
-  -a ${optName[a]} ${optDesc[a]}
-  -b ${optName[b]} ${optDesc[b]}
-  -c ${optName[c]} ${optDesc[c]}
-  -d ${optName[d]} ${optDesc[d]}
-  "
-  exit 0
-fi
-
-# Check requirements or defaults
-if [ -z "${SOa}" ]; then
-  #SOa="DEFAULT" # Uncomment for optional default
-  echo "${optName[a]} must be set."; yeoFail="true" # Uncomment if required
-fi
-if [ -z "${SOb}" ]; then
-  #SOb="DEFAULT" # Uncomment for optional default
-  echo "${optName[b]} must be set."; yeoFail="true" # Uncomment if required
-fi
-if [ -z "${SOc}" ]; then
-  #SOc="DEFAULT" # Uncomment for optional default
-  echo "${optName[c]} must be set."; yeoFail="true" # Uncomment if required
-fi
-if [ -z "${SOd}" ]; then
-  #SOd="DEFAULT" # Uncomment for optional default
-  echo "${optName[d]} must be set."; yeoFail="true" # Uncomment if required
-fi
-
-# Exit if failed
-if [ "${yeoFail}" = "true" ]; then
-  echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
-  exit 0;
-fi
-###########################
-
-echo "this: ${SOa} ${SOb} ${SOc} ${SOd}"
+testFunction "$testedvar" "$testdev2"

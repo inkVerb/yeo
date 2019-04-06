@@ -1,0 +1,21 @@
+#!/bin/sh
+## This is a config file for other verb scripts
+# Site URI List, whether they are active or not
+
+nameURI="ink.verb.ink"
+hostURI="1verb.ink.verb.ink"
+emailTLDURI="ink.verb.email"
+emailURI="ink.verb.email"
+cityURI="ink.verb.city"
+oneURI="ink.verb.one"
+inkURI="ink.verb.ink"
+blueURI="ink.verb.blue"
+vipURI="ink.verb.vip"
+kiwiURI="ink.verb.kiwi"
+pinkURI="ink.verb.pink"
+redURI="ink.verb.red"
+rocksURI="ink.verb.rocks"
+
+serveURI="serve.ink.verb.ink"
+cashURI="ink.verb.cash"
+

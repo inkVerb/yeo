@@ -1,4 +1,13 @@
-#!/bin/sh
+#!/bin/bash
+
+# Set the serf name
+SURFNAME="serfname"
+
+# Include the settings & functions
+source ${YEOSET}
+source ${yDir}/yeo.functions
+source ${CONF}/siteurilist
+source ${CONF}/sitenameip
 
 # About message
 aboutMsg="$(cat <<EOU
@@ -6,7 +15,8 @@ aboutMsg="$(cat <<EOU
 EOU
 )"
 
-optSerf=":a:b:cd"
+# Available flags
+optSerf="a:b:c:d:e:f:g:i:j:k:l:m:o:p:q:hyn"
 declare -A optName
 declare -A optDesc
 optName[a]=""
@@ -23,92 +33,210 @@ optName[f]=""
 optDesc[f]=""
 optName[g]=""
 optDesc[g]=""
-optDesc[n]=""
+optName[i]=""
+optDesc[i]=""
+optName[j]=""
+optDesc[j]=""
+optName[k]=""
+optDesc[k]=""
+optName[l]=""
+optDesc[l]=""
+optName[m]=""
+optDesc[m]=""
+optName[o]=""
+optDesc[o]=""
+optName[p]=""
+optDesc[p]=""
+optName[q]=""
+optDesc[q]=""
+optName[yn]="Yes/No"
+optDesc[yn]="Choose one-letter flag: (y)es or (n)o"
 
-executioner() {
+
+# Check the variables
 while getopts "${optSerf}" Flag; do
- case $Flag in
+ case "${Flag}" in
   # Help
   h)
-    echo "${aboutMsg}"
-    echo "
-    Flag settings:
-    -a ${optName[a]} ${optDesc[a]}
-    -b ${optName[b]} ${optDesc[b]}
-    -c ${optName[c]} ${optDesc[c]}
-    -d ${optName[d]} ${optDesc[d]}
-    -e ${optName[e]} ${optDesc[e]}
-    -f ${optName[f]} ${optDesc[f]}
-    -g ${optName[g]} ${optDesc[g]}
-    -n ${optDesc[n]}
-    "
+    SOh="true"
   ;;
   a)
-    isaz "${OPTARG}"
+    isTEST "${OPTARG}"
     SOa="${OPTARG}"
   ;;
   b)
-    isInt "${OPTARG}"
+    isTEST "${OPTARG}"
     SOb="${OPTARG}"
   ;;
   c)
-    isDomain "${OPTARG}"
+    isTEST "${OPTARG}"
     SOc="${OPTARG}"
   ;;
   d)
-    isDomain "${OPTARG}"
+    isTEST "${OPTARG}"
     SOd="${OPTARG}"
   ;;
   e)
-    isDomain "${OPTARG}"
+    isTEST "${OPTARG}"
     SOe="${OPTARG}"
   ;;
   f)
-    isDomain "${OPTARG}"
+    isTEST "${OPTARG}"
     SOf="${OPTARG}"
   ;;
   g)
-    isDomain "${OPTARG}"
+    isTEST "${OPTARG}"
     SOg="${OPTARG}"
   ;;
+  i)
+    isTEST "${OPTARG}"
+    SOi="${OPTARG}"
+  ;;
+  j)
+    isTEST "${OPTARG}"
+    SOj="${OPTARG}"
+  ;;
+  k)
+    isTEST "${OPTARG}"
+    SOk="${OPTARG}"
+  ;;
+  l)
+    isTEST "${OPTARG}"
+    SOl="${OPTARG}"
+  ;;
+  m)
+    isTEST "${OPTARG}"
+    SOm="${OPTARG}"
+  ;;
+  o)
+    isTEST "${OPTARG}"
+    SOo="${OPTARG}"
+  ;;
+  p)
+    isTEST "${OPTARG}"
+    SOp="${OPTARG}"
+  ;;
+  q)
+    isTEST "${OPTARG}"
+    SOq="${OPTARG}"
+  ;;
+  y)
+    SOyn="yes"
+  ;;
   n)
-    SOn="-n"
+    SOyn="no"
+  ;;
+  *)
+    yeoFail="true"
   ;;
  esac
 done
 
+
 # Check requirements or defaults
+## HELP
+if [ "${SOh}" = "true" ]; then
+  echo "
+${aboutMsg}"
+  echo "
+Available flags:
+-h This help message
+-a  ${optName[a]}  ${optDesc[a]}
+-b  ${optName[b]}  ${optDesc[b]}
+-c  ${optName[c]}  ${optDesc[c]}
+-d  ${optName[d]}  ${optDesc[d]}
+-e  ${optName[e]}  ${optDesc[e]}
+-f  ${optName[f]}  ${optDesc[f]}
+-g  ${optName[g]}  ${optDesc[g]}
+-i  ${optName[i]}  ${optDesc[i]}
+-j  ${optName[j]}  ${optDesc[j]}
+-k  ${optName[k]}  ${optDesc[k]}
+-l  ${optName[l]}  ${optDesc[l]}
+-m  ${optName[m]}  ${optDesc[m]}
+-o  ${optName[o]}  ${optDesc[o]}
+-p  ${optName[p]}  ${optDesc[p]}
+-q  ${optName[q]}  ${optDesc[q]}
+-y/n  ${optName[yn]}  ${optDesc[yn]}
+"
+  exit 0
+fi
+
+## FLAGS
 if [ -z "${SOa}" ]; then
   #SOa="DEFAULT" # Uncomment for optional default
-  echo "${optName[a]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+  echo "${optName[a]} must be set. ${optDesc[a]}"; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOb}" ]; then
   #SOb="DEFAULT" # Uncomment for optional default
-  echo "${optName[b]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+  echo "${optName[b]} must be set. ${optDesc[b]}"; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOc}" ]; then
   #SOc="DEFAULT" # Uncomment for optional default
-  echo "${optName[c]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+  echo "${optName[c]} must be set. ${optDesc[c]}"; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOd}" ]; then
   #SOd="DEFAULT" # Uncomment for optional default
-  echo "${optName[d]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+  echo "${optName[d]} must be set. ${optDesc[d]}"; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOe}" ]; then
   #SOe="DEFAULT" # Uncomment for optional default
-  echo "${optName[e]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+  echo "${optName[e]} must be set. ${optDesc[e]}"; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOf}" ]; then
   #SOf="DEFAULT" # Uncomment for optional default
-  echo "${optName[f]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+  echo "${optName[f]} must be set. ${optDesc[f]}"; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOg}" ]; then
   #SOg="DEFAULT" # Uncomment for optional default
-  echo "${optName[g]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+  echo "${optName[g]} must be set. ${optDesc[g]}"; yeoFail="true" # Uncomment if required
 fi
-if [ -z "${SOn}" ]; then
-  SOn="-n" # Uncomment for optional default
-  #echo "${optName[a]} must be set. Learn more with: yeo ${SURNAME} ${SUBNAME} -h"; exit 0 # Uncomment if required
+if [ -z "${SOi}" ]; then
+  #SOa="DEFAULT" # Uncomment for optional default
+  echo "${optName[i]} must be set. ${optDesc[i]}"; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOj}" ]; then
+  #SOb="DEFAULT" # Uncomment for optional default
+  echo "${optName[j]} must be set. ${optDesc[j]}"; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOk}" ]; then
+  #SOc="DEFAULT" # Uncomment for optional default
+  echo "${optName[k]} must be set. ${optDesc[k]}"; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOl}" ]; then
+  #SOd="DEFAULT" # Uncomment for optional default
+  echo "${optName[l]} must be set. ${optDesc[l]}"; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOm}" ]; then
+  #SOe="DEFAULT" # Uncomment for optional default
+  echo "${optName[m]} must be set. ${optDesc[m]}"; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOo}" ]; then
+  #SOf="DEFAULT" # Uncomment for optional default
+  echo "${optName[o]} must be set. ${optDesc[o]}"; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOp}" ]; then
+  #SOg="DEFAULT" # Uncomment for optional default
+  echo "${optName[p]} must be set. ${optDesc[p]}"; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOq}" ]; then
+  #SOg="DEFAULT" # Uncomment for optional default
+  echo "${optName[q]} must be set. ${optDesc[q]}"; yeoFail="true" # Uncomment if required
 fi
 
-}
+## Y/N
+if [ -z "${SOyn}" ]; then
+  #SOyn="-y" # Uncomment for optional YES default
+  #SOyn="-n" # Uncomment for optional NO default
+  echo "${optName[yn]} must be set. ${optDesc[yn]}"; yeoFail="true" # Uncomment if required
+fi
+
+
+# Exit if failed
+if [ "${yeoFail}" = "true" ]; then
+  echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
+  exit 0;
+fi
+
+
+# Run the serf
+"${SERFS}/${SURFNAME}" "${SOa}" "${SOb}" "${SOc}" "${SOd}" "${SOe}" "${SOf}" "${SOg}" "${SOi}" "${SOj}" "${SOk}" "${SOl}" "${SOm}" "${SOo}" "${SOp}" "${SOq}" "${SOyn}"
