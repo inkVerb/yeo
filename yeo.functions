@@ -400,5 +400,5 @@ This will display available \"subnames\" for the surname.
 
 usageSur() {
 #local  SURNAME="${1}" # This might not be necessary
-cat ${SERFS}/${SURNAME}.help
+cat ${YEOPBDIR}/${SURNAME}.help
 }
