@@ -26,6 +26,7 @@ export TOOLS="${vDir}/tools"
 export REPO="${vDir}/repo"
 export BOSS="${vDir}/boss"
 export DOCS="${vDir}/docs"
+export VAPPSDIR="/var/www/vapps/"
 
 # Settings
 export VERBTLDS=( city one ink email blue kiwi red pink vip cash rocks )

@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# Set the serf name
+SURFNAME="activatedomain"
+
+# Include the settings & functions
+source ${YEOSET}
+source ${yDir}/yeo.functions
+source ${CONF}/siteurilist
+source ${CONF}/sitenameip
+
+# About message
+aboutMsg="$(cat <<EOU
+This activates a domain to work with either the FTP-accessible "_domains/" directory or a vapp
+EOU
+)"
+
+# Available flags
+optSerf="d:v:h"
+declare -A optName
+declare -A optDesc
+optName[d]="Domain"
+optDesc[d]="The domain to activate in the \"domains/\" web folder"
+optName[v]="Vapp"
+optDesc[v]="\"Verb app\", if linking a verb app"
+
+
+# Check the variables
+while getopts "${optSerf}" Flag; do
+ case "${Flag}" in
+  # Help
+  h)
+    SOh="true"
+  ;;
+  d)
+    isDomain "${OPTARG}"
+    SOd="${OPTARG}"
+  ;;
+  v)
+    isVapp "${OPTARG}"
+    SOv="${OPTARG}"
+  ;;
+  *)
+    yeoFail="true"
+  ;;
+ esac
+done
+
+
+# Check requirements or defaults
+## HELP
+if [ "${SOh}" = "true" ]; then
+  echo "
+${aboutMsg}"
+  echo "
+Available flags:
+-h This help message
+-d  ${optName[d]}  ${optDesc[d]}
+-v  ${optName[v]}  ${optDesc[v]}
+"
+  exit 0
+fi
+
+## FLAGS
+if [ -z "${SOd}" ]; then
+  #SOd="DEFAULT" # Uncomment for optional default
+  echo "${optName[d]} must be set. ${optDesc[d]}"; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOv}" ]; then
+  #SOe="DEFAULT" # Uncomment for optional default
+  #echo "${optName[v]} must be set. ${optDesc[v]}"; yeoFail="true" # Uncomment if required
+fi
+
+
+# Exit if failed
+if [ "${yeoFail}" = "true" ]; then
+  echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
+  exit 0;
+fi
+
+
+# Run the serf
+"${SERFS}/${SURFNAME}" "${SOd}" "${SOv}"

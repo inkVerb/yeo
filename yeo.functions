@@ -2,6 +2,8 @@
 #inkVerbYeo! verb.ink
 
 # This is the functions file for the yeo "Yoeman"
+## Each function can be followed by an "n" for "no exit" so that the function will not break the script if it returns false
+## Each function takes its check argument and its UX description for user error instructions.
 
 # Validity check functions
 
@@ -10,13 +12,13 @@
 ## Time zone (+08:00, -05:00, etc)
 isPHPzone() {
 local tZONE="$1"
-local vvar="Time zone (number)"
+local vvar="$2"
 local VALIDregex="[+-][0-9]{2}:[0-9]{2}"
 if [[ "${tZONE}" =~ ${VALIDregex} ]]; then
 isPHPzone="true"; else
 isPHPzone="false"; fi
 
-if [ "${isPHPzone}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isPHPzone}" = "false" ]; then
 echo "${vvar} must follow +HH:MM."
 exit 0; fi
 }
@@ -25,12 +27,12 @@ exit 0; fi
 ### This validates a choice from accepted PHP cities at https://www.php.net/manual/en/timezones.php
 isPHPcity() {
 local tCITY="$1"
-local vvar="PHP time zone city"
+local vvar="$2"
 if grep -qr "\b${tCITY}\b" ${PHPCITIES}; then
 isPHPcity="true"; else
 isPHPcity="false"; fi
 
-if [ "${isPHPcity}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isPHPcity}" = "false" ]; then
 echo "${vvar} must be an accepted city, such as: \"Asia/Hong_Kong\"
 Full list here: https://www.php.net/manual/en/timezones.php"
 exit 0; fi
@@ -42,18 +44,19 @@ cat "${PHPCITIES}"
 }
 
 ## Choice Select
+### THIS TAKES FOUR ARGUMENTS!!!!!!
 ### This validates a choice from a set of selected choices (in case an existing choice function is not available)
 ### Usage: isChoice CHOICE "CHOICE1 CHOICE2 CHOICE3 etc"
 isChoice() {
 local CHOICE="$1"
-local vvar="Choices"
 local iCHOICES="$2"
+local vvar="$3"
 local aCHOICES=(${iCHOICES})
 if [[ " ${aCHOICES[@]} " =~ " ${CHOICE} " ]]; then
 isChoice="true"; else
 isChoice="false"; fi
 
-if [ "${isChoice}" = "false" ]; then
+if [ "$4" != "n" ] && [ "${isChoice}" = "false" ]; then
 echo "${vvar} are: ${aCHOICES[@]}"
 exit 0; fi
 }
@@ -71,7 +74,7 @@ isXlong="true"; else
 isXlong="false"
 exit 0; fi
 
-if [ "${isXlong}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isXlong}" = "false" ]; then
 echo "${vvar} must be ${XLENGTH}."
 exit 0; fi
 }
@@ -80,13 +83,13 @@ exit 0; fi
 ### Thanks http://www.linuxjournal.com/content/validating-ip-address-bash-script
 isIP4() {
 local IP4="$1"
-local vvar="IPv4"
+local vvar="$2"
 local VALIDregex="^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})"
 if [[ "${IP4}" =~ ${VALIDregex} ]]; then
 isIP4="true"; else
 isIP4="false"; fi
 
-if [ "${isIP4}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isIP4}" = "false" ]; then
 echo "${vvar} must be a valid IP4 address."
 exit 0; fi
 }
@@ -95,13 +98,13 @@ exit 0; fi
 ### Expanded or compressed IPv6 formats both work
 isIP6() {
 local IP6="$1"
-local vvar="IPv6"
+local vvar="$2"
 local VALIDregex="(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))"
 if [[ "${IP6}" =~ ${VALIDregex} ]]; then
 isIP6="true"; else
 isIP6="false"; fi
 
-if [ "${isIP6}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isIP6}" = "false" ]; then
 echo "${vvar} must be a valid IP6 address."
 exit 0; fi
 }
@@ -109,13 +112,13 @@ exit 0; fi
 ## Integer
 isInt() {
 local INT=$1
-local vvar=$2
+local vvar="$2"
 local VALIDregex="^[-?[:digit:]]*$"
 if [[ "${INT}" =~ ${VALIDregex} ]]; then
 isInt="true"; else
 isInt="false"; fi
 
-if [ "${isInt}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isInt}" = "false" ]; then
 echo "${vvar} must be a valid integer."
 exit 0; fi
 }
@@ -123,13 +126,13 @@ exit 0; fi
 ## Float (floating decimal)
 isFloat() {
 local FLOAT=$1
-local vvar=$2
+local vvar="$2"
 local VALIDregex="^[-?[:digit:]].?[[:digit:]]*$"
 if [[ "${FLOAT}" =~ ${VALIDregex} ]]; then
 isFloat="true"; else
 isFloat="false"; fi
 
-if [ ${isFloat} = "false" ]; then
+if [ "$3" != "n" ] && [ ${isFloat} = "false" ]; then
 echo "${vvar} must be a valid integer or decimal."
 exit 0; fi
 }
@@ -138,13 +141,13 @@ exit 0; fi
 ### Thanks https://stackoverflow.com/questions/7662465/bash-is-there-a-simple-way-to-check-whether-a-string-is-a-valid-sha-1-or-md5
 isHEX() {
 local HEX="$1"
-local vvar="Hexadecimal characters"
+local vvar="$2"
 local VALIDregex="^[[:xdigit:]]*$"
 if [[ "${HEX}" =~ ${VALIDregex} ]]; then
 isHEX="true"; else
 isHEX="false"; fi
 
-if [ ${isHEX} = "false" ]; then
+if [ "$3" != "n" ] && [ ${isHEX} = "false" ]; then
 echo "${vvar} only."
 exit 0; fi
 }
@@ -152,13 +155,13 @@ exit 0; fi
 ## 09
 is09() {
 local t09="$1"
-local vvar="Lowercase letters"
+local vvar="$2"
 local VALIDregex="^[[:digit:]]*$"
 if [[ "${t09}" =~ ${VALIDregex} ]]; then
 is09="true"; else
 is09="false"; fi
 
-if [ "${is09}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${is09}" = "false" ]; then
 echo "${vvar} only."
 exit 0; fi
 }
@@ -166,13 +169,13 @@ exit 0; fi
 ## az
 isaz() {
 local az="$1"
-local vvar="Lowercase letters"
+local vvar="$2"
 local VALIDregex="^[[:lower:]]*$"
 if [[ "${az}" =~ ${VALIDregex} ]]; then
 isaz="true"; else
 isaz="false"; fi
 
-if [ "${isaz}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isaz}" = "false" ]; then
 echo "${vvar} only."
 exit 0; fi
 }
@@ -180,13 +183,13 @@ exit 0; fi
 ## azAZ
 isazAZ() {
 local azAZ="$1"
-local vvar="English letters"
+local vvar="$2"
 local VALIDregex="^[[:alpha:]]*$"
 if [[ "${azAZ}" =~ ${VALIDregex} ]]; then
 isazAZ="true"; else
 isazAZ="false"; fi
 
-if [ "${isazAZ}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isazAZ}" = "false" ]; then
 echo "${vvar} only, uppercase and/or lowercase."
 exit 0; fi
 }
@@ -194,13 +197,13 @@ exit 0; fi
 ## az09
 isaz09() {
 local az09="$1"
-local vvar=$2
+local vvar="$2"
 local VALIDregex="^[[:lower:][:digit:]]*$"
 if [[ "${az09}" =~ ${VALIDregex} ]]; then
 isaz09="true"; else
 isaz09="false"; fi
 
-if [ ${isaz09} = "false" ]; then
+if [ "$3" != "n" ] && [ ${isaz09} = "false" ]; then
 echo "${vvar} must only include lowercase letters and/or digits."
 exit 0; fi
 }
@@ -208,13 +211,13 @@ exit 0; fi
 ## AZ09
 isAZ09() {
 local AZ09="$1"
-local vvar="Caps & numbers"
+local vvar="$2"
 local VALIDregex="^[[:upper:][:digit:]]*$"
 if [[ "${AZ09}" =~ ${VALIDregex} ]]; then
 isAZ09="true"; else
 isAZ09="false"; fi
 
-if [ "${isAZ09}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isAZ09}" = "false" ]; then
 echo "${vvar} only include upperrcase letters and/or digits 0-9."
 exit 0; fi
 }
@@ -222,13 +225,13 @@ exit 0; fi
 ## azAZ09
 isazAZ09() {
 local azAZ09="$1"
-local vvar="English letters & numbers"
+local vvar="$2"
 local VALIDregex="^[[:alnum:]]*$"
 if [[ "${azAZ09}" =~ ${VALIDregex} ]]; then
 isazAZ09="true"; else
 isazAZ09="false"; fi
 
-if [ "${isazAZ09}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isazAZ09}" = "false" ]; then
 echo "${vvar} only include uppercase letters, lowercase letters, and/or digits."
 exit 0; fi
 }
@@ -236,13 +239,13 @@ exit 0; fi
 ## azAZ09punct
 isazAZ09punct() {
 local azAZ09punct="$1"
-local vvar="English letters & numbers"
+local vvar="$2"
 local VALIDregex="^([-A-Za-z0-9\+&@#%?=~*_|!:,.;])*$"
 if [[ "${azAZ09punct}" =~ ${VALIDregex} ]]; then
 isazAZ09punct="true"; else
 isazAZ09punct="false"; fi
 
-if [ "${isazAZ09punct}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isazAZ09punct}" = "false" ]; then
 echo "${vvar} only include uppercase letters, lowercase letters, and/or digits."
 exit 0; fi
 }
@@ -250,13 +253,13 @@ exit 0; fi
 ## GraphChar (alphanumeric & Punctuation & Certain Symbol Characters)
 isGraphChar() {
 local GRAPHCHAR="$1"
-local vvar="Normal characters"
+local vvar="$2"
 local VALIDregex="^[[:graph:]]*$"
 if [[ "${GRAPHCHAR}" =~ ${VALIDregex} ]]; then
 isGraphChar="true"; else
 isGraphChar="false"; fi
 
-if [ "${isGraphChar}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isGraphChar}" = "false" ]; then
 echo "${vvar} must only include uppercase letters, lowercase letters, digits, punctuation, and only certain special characters and smbols."
 exit 0; fi
 }
@@ -264,13 +267,13 @@ exit 0; fi
 ## File (a valid filename)
 isFilename() {
 local FILE="$1"
-local vvar="File"
+local vvar="$2"
 local FILEregex='^[]0-9a-zA-Z,!#^`@{}=() %.;&/~:_|[-]*$'
 if [[ "${FILE}" =~ ${FILEregex} ]] ; then
 isFilename="true"; else
 isFilename="false"; fi
 
-if [ "${isFilename}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isFilename}" = "false" ]; then
 echo "${vvar} must be a \"normal\" filename: alphanumeric; CAPS, hyphen, and underscore allowed; but no other special characters or spaces."
 exit 0; fi
 }
@@ -278,13 +281,13 @@ exit 0; fi
 ## Path (a valid path)
 isPathname() {
 local PATH="$1"
-local vvar="Path"
+local vvar="$2"
 local PATHregex="(/[^/ ]*)+/?$"
 if [[ "${PATH}" =~ ${PATHregex} ]] ; then
 isPathname="true"; else
 isPathname="false"; fi
 
-if [ "${isPathname}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isPathname}" = "false" ]; then
 echo "${vvar} must be a \"normal\" filename: alphanumeric; CAPS, hyphen, and underscore allowed; but no other special characters or spaces."
 exit 0; fi
 }
@@ -292,13 +295,13 @@ exit 0; fi
 ## URL ({s}ftp itpc file http{s} ://[az09.].az)
 isSpecialURL() {
 local URL="$1"
-local vvar="URL"
+local vvar="$2"
 local SURLregex="^(https?|file|s?ftp|itpc):///?([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])/[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$"
 if [[ "${URL}" =~ ${SURLregex} ]]; then
 isSpecialURL="true"; else
 isSpecialURL="false"; fi
 
-if [ "${isSpecialURL}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isSpecialURL}" = "false" ]; then
 echo "${vvar} must be a \"functional\" URL: preceeded by (s)ftp:// or file:// or iptc:// or http(s):// followed by domain, including alphanumeric characters, underscore, and hyphen, subdomains allowed"
 exit 0; fi
 }
@@ -306,13 +309,13 @@ exit 0; fi
 ## URL (http{s}://[az09.].az/...)
 isURL() {
 local URL="$1"
-local vvar="URL"
+local vvar="$2"
 local URLregex="^(https?|file|s?ftp|itpc)://([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])/[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$"
 if [[ "${URL}" =~ ${URLregex} ]]; then
 isURL="true"; else
 isURL="false"; fi
 
-if [ "${isURL}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isURL}" = "false" ]; then
 echo "${vvar} must be a \"normal\" URL: domain, including alphanumeric characters, underscore, and hyphen, subdomains allowed, preceeded by either http(s):// or (s)ftp://"
 exit 0; fi
 }
@@ -320,13 +323,13 @@ exit 0; fi
 ## Domain (az09.az)
 isDomain() {
 local DOMAIN="$1"
-local vvar="Domain"
+local vvar="$2"
 local DOMAINregex="([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 if [[ "${DOMAIN}" =~ ${DOMAINregex} ]] ; then
 isDomain="true"; else
 isDomain="false"; fi
 
-if [ "${isDomain}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isDomain}" = "false" ]; then
 echo "${vvar} must be a \"normal\" domain, including alphanumeric characters, underscore, and hyphen, subdomains allowed if included, ie:  inksaverb.com  sub.inkisaverb.com  etc.sub.inkisaverb.com"
 exit 0; fi
 }
@@ -335,14 +338,14 @@ exit 0; fi
 ### Thanks https://stackoverflow.com/a/2138832/10343144
 isEmail() {
 local EMAIL="$1"
-local vvar="Email"
+local vvar="$2"
 local EMAILregex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 
 if [[ "${EMAIL}" =~ ${EMAILregex} ]] ; then
 isEmail="true"; else
 isEmail="false"; fi
 
-if [ "${isEmail}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isEmail}" = "false" ]; then
 echo "${vvar} must be a valid email address."
 exit 0; fi
 }
@@ -350,13 +353,69 @@ exit 0; fi
 ## verbTLD (valid, accepted TLDs; not full, proper verbURI)
 isverbTLD() {
 local verbTLD="$1"
-local vvar="Verber TLD"
+local vvar="$2"
 if [[ " ${VERBTLDS[@]} " =~ " ${verbTLD} " ]]; then
 isverbTLD="true"; else
 isverbTLD="false"; fi
 
-if [ "${isverbTLD}" = "false" ]; then
+if [ "$3" != "n" ] && [ "${isverbTLD}" = "false" ]; then
 echo "${vvar} must a valid verb TLD: ${VERBTLDS[@]}"
+exit 0; fi
+}
+
+## Vapp (a valid, installed vapp in /var/www/vapps)
+isVapp() {
+local VAPP="$1"
+local vvar="$2"
+local listLoc="${VAPPSDIR}"
+if [ -e "${listLoc}/${VAPP}" ]; then
+    isVapp="true"; else
+    isVapp="false"; fi
+
+if [ "$3" != "n" ] && [ "${isVapp}" = "false" ]; then
+echo "${vvar} must be installed, currently it isn't."
+exit 0; fi
+}
+
+## isDir (a valid, existing directory in a location)
+### argument must be full path to directory: isDir /path/to/dir
+isDir() {
+local LDIR="$1"
+local vvar="$2"
+if [ -d "${LDIR}" ]; then
+    isDir="true"; else
+    isDir="false"; fi
+
+if [ "$3" != "n" ] && [ "${isDir}" = "false" ]; then
+echo "${vvar} must exist, currently it doesn't."
+exit 0; fi
+}
+
+## isFile (a valid, existing file in a location)
+### argument must be full path to file: isDir /path/to/file
+isFile() {
+local LFILE="$1"
+local vvar="$2"
+if [ -f "${LFILE}" ]; then
+    isFile="true"; else
+    isFile="false"; fi
+
+if [ "$3" != "n" ] && [ "${isFile}" = "false" ]; then
+echo "${vvar} must exist, currently it doesn't."
+exit 0; fi
+}
+
+## isExists (a valid, existing file/dir/link/something in a location)
+### argument must be full path to file: isDir /path/to/exists
+isExists() {
+local LEXIST="$1"
+local vvar="$2"
+if [ -e "${LEXIST}" ]; then
+    isExists="true"; else
+    isExists="false"; fi
+
+if [ "$3" != "n" ] && [ "${isExists}" = "false" ]; then
+echo "${vvar} must be exist, currently it doesn't."
 exit 0; fi
 }
 
