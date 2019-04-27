@@ -363,12 +363,26 @@ echo "${vvar} must a valid verb TLD: ${VERBTLDS[@]}"
 exit 0; fi
 }
 
+## WWW Domain (a valid, installed vapp in /var/www/domains)
+isWWWdomain() {
+local wwwDomain="$1"
+local vvar="$2"
+local listLoc="${WWWDOMAINS}"
+if [ -d "${listLoc}/${wwwDomain}" ]; then
+    isWWWdomain="true"; else
+    isWWWdomain="false"; fi
+
+if [ "$3" != "n" ] && [ "${isWWWdomain}" = "false" ]; then
+echo "${vvar} must be installed, currently it isn't."
+exit 0; fi
+}
+
 ## Vapp (a valid, installed vapp in /var/www/vapps)
 isVapp() {
 local VAPP="$1"
 local vvar="$2"
 local listLoc="${VAPPSDIR}"
-if [ -e "${listLoc}/${VAPP}" ]; then
+if [ -d "${listLoc}/${VAPP}" ]; then
     isVapp="true"; else
     isVapp="false"; fi
 

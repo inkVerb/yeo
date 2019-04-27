@@ -59,7 +59,7 @@ fi
 
 ## Y/N
 if [ -z "${SOyn}" ]; then
-  echo "${optName[yn]} must be set. ${optDesc[yn]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[yn]}  option must be set."; yeoFail="true" # Uncomment if required
 fi
 
 

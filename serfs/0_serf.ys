@@ -61,63 +61,63 @@ while getopts "${optSerf}" Flag; do
     SOh="true"
   ;;
   a)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[a]}"
     SOa="${OPTARG}"
   ;;
   b)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[b]}"
     SOb="${OPTARG}"
   ;;
   c)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[c]}"
     SOc="${OPTARG}"
   ;;
   d)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[d]}"
     SOd="${OPTARG}"
   ;;
   e)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[e]}"
     SOe="${OPTARG}"
   ;;
   f)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[f]}"
     SOf="${OPTARG}"
   ;;
   g)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[g]}"
     SOg="${OPTARG}"
   ;;
   i)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[i]}"
     SOi="${OPTARG}"
   ;;
   j)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[j]}"
     SOj="${OPTARG}"
   ;;
   k)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[k]}"
     SOk="${OPTARG}"
   ;;
   l)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[l]}"
     SOl="${OPTARG}"
   ;;
   m)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[m]}"
     SOm="${OPTARG}"
   ;;
   o)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[o]}"
     SOo="${OPTARG}"
   ;;
   p)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[p]}"
     SOp="${OPTARG}"
   ;;
   q)
-    isTEST "${OPTARG}"
+    isTEST "${OPTARG}" "${optName[q]}"
     SOq="${OPTARG}"
   ;;
   y)
@@ -164,70 +164,70 @@ fi
 ## FLAGS
 if [ -z "${SOa}" ]; then
   #SOa="DEFAULT" # Uncomment for optional default
-  echo "${optName[a]} must be set. ${optDesc[a]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[a]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOb}" ]; then
   #SOb="DEFAULT" # Uncomment for optional default
-  echo "${optName[b]} must be set. ${optDesc[b]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[b]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOc}" ]; then
   #SOc="DEFAULT" # Uncomment for optional default
-  echo "${optName[c]} must be set. ${optDesc[c]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[c]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOd}" ]; then
   #SOd="DEFAULT" # Uncomment for optional default
-  echo "${optName[d]} must be set. ${optDesc[d]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[d]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOe}" ]; then
   #SOe="DEFAULT" # Uncomment for optional default
-  echo "${optName[e]} must be set. ${optDesc[e]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[e]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOf}" ]; then
   #SOf="DEFAULT" # Uncomment for optional default
-  echo "${optName[f]} must be set. ${optDesc[f]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[f]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOg}" ]; then
   #SOg="DEFAULT" # Uncomment for optional default
-  echo "${optName[g]} must be set. ${optDesc[g]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[g]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOi}" ]; then
   #SOa="DEFAULT" # Uncomment for optional default
-  echo "${optName[i]} must be set. ${optDesc[i]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[i]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOj}" ]; then
   #SOb="DEFAULT" # Uncomment for optional default
-  echo "${optName[j]} must be set. ${optDesc[j]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[j]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOk}" ]; then
   #SOc="DEFAULT" # Uncomment for optional default
-  echo "${optName[k]} must be set. ${optDesc[k]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[k]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOl}" ]; then
   #SOd="DEFAULT" # Uncomment for optional default
-  echo "${optName[l]} must be set. ${optDesc[l]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[l]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOm}" ]; then
   #SOe="DEFAULT" # Uncomment for optional default
-  echo "${optName[m]} must be set. ${optDesc[m]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[m]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOo}" ]; then
   #SOf="DEFAULT" # Uncomment for optional default
-  echo "${optName[o]} must be set. ${optDesc[o]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[o]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOp}" ]; then
   #SOg="DEFAULT" # Uncomment for optional default
-  echo "${optName[p]} must be set. ${optDesc[p]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[p]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 if [ -z "${SOq}" ]; then
   #SOg="DEFAULT" # Uncomment for optional default
-  echo "${optName[q]} must be set. ${optDesc[q]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[q]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 
 ## Y/N
 if [ -z "${SOyn}" ]; then
   #SOyn="-y" # Uncomment for optional YES default
   #SOyn="-n" # Uncomment for optional NO default
-  echo "${optName[yn]} must be set. ${optDesc[yn]}"; yeoFail="true" # Uncomment if required
+  echo "${optName[yn]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 
 
