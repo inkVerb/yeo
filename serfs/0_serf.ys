@@ -141,22 +141,22 @@ ${aboutMsg}"
   echo "
 Available flags:
 -h This help message
--a  ${optName[a]}  ${optDesc[a]}
--b  ${optName[b]}  ${optDesc[b]}
--c  ${optName[c]}  ${optDesc[c]}
--d  ${optName[d]}  ${optDesc[d]}
--e  ${optName[e]}  ${optDesc[e]}
--f  ${optName[f]}  ${optDesc[f]}
--g  ${optName[g]}  ${optDesc[g]}
--i  ${optName[i]}  ${optDesc[i]}
--j  ${optName[j]}  ${optDesc[j]}
--k  ${optName[k]}  ${optDesc[k]}
--l  ${optName[l]}  ${optDesc[l]}
--m  ${optName[m]}  ${optDesc[m]}
--o  ${optName[o]}  ${optDesc[o]}
--p  ${optName[p]}  ${optDesc[p]}
--q  ${optName[q]}  ${optDesc[q]}
--y/n  ${optName[yn]}  ${optDesc[yn]}
+-a  ${optName[a]}: ${optDesc[a]}
+-b  ${optName[b]}: ${optDesc[b]}
+-c  ${optName[c]}: ${optDesc[c]}
+-d  ${optName[d]}: ${optDesc[d]}
+-e  ${optName[e]}: ${optDesc[e]}
+-f  ${optName[f]}: ${optDesc[f]}
+-g  ${optName[g]}: ${optDesc[g]}
+-i  ${optName[i]}: ${optDesc[i]}
+-j  ${optName[j]}: ${optDesc[j]}
+-k  ${optName[k]}: ${optDesc[k]}
+-l  ${optName[l]}: ${optDesc[l]}
+-m  ${optName[m]}: ${optDesc[m]}
+-o  ${optName[o]}: ${optDesc[o]}
+-p  ${optName[p]}: ${optDesc[p]}
+-q  ${optName[q]}: ${optDesc[q]}
+-y/n  ${optName[yn]}: ${optDesc[yn]}
 "
   exit 0
 fi

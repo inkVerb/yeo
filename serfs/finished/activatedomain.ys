@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the serf name
-SURFNAME="adddomain"
+SURFNAME="activatedomain"
 
 # Include the settings & functions
 source ${YEOSET}
@@ -11,18 +11,18 @@ source ${CONF}/sitenameip
 
 # About message
 aboutMsg="$(cat <<EOU
-This adds a new domain, complete with OpenDKIM profiles and keys and inkCert and Apache configs
-This also creates a folder for the domain in www/domains which an ftpvip can access
-This also creates an inkDNS zone file, complete with mail records
+This activates a hosted domain to work with either the FTP-accessible "_domains/" directory or a vapp
 EOU
 )"
 
 # Available flags
-optSerf="a:b:c:d:e:f:g:i:j:k:l:m:o:p:q:hyn"
+optSerf="d:v:h"
 declare -A optName
 declare -A optDesc
 optName[d]="Domain"
-optDesc[d]="A new domain (or subdomain if using for email and unique SSL certificates)"
+optDesc[d]="The domain to be activated"
+optName[v]="Vapp"
+optDesc[v]="\"Verb app\", if activating with a verb app"
 
 
 # Check the variables
@@ -34,7 +34,12 @@ while getopts "${optSerf}" Flag; do
   ;;
   d)
     isDomain "${OPTARG}" "${optName[d]}"
+    isWWWdomain "${OPTARG}" "Hosted domain ${OPTARG}"
     SOd="${OPTARG}"
+  ;;
+  v)
+    isVapp "${OPTARG}" "${optName[v]}"
+    SOv="${OPTARG}"
   ;;
   *)
     yeoFail="true"
@@ -51,7 +56,8 @@ ${aboutMsg}"
   echo "
 Available flags:
 -h This help message
--d  ${optName[d]}  ${optDesc[d]}
+-d  ${optName[d]}: ${optDesc[d]}
+-v  ${optName[v]}: ${optDesc[v]}
 "
   exit 0
 fi
@@ -60,6 +66,10 @@ fi
 if [ -z "${SOd}" ]; then
   #SOd="DEFAULT" # Uncomment for optional default
   echo "${optName[d]} option must be set."; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOv}" ]; then
+  #SOv="DEFAULT" # Uncomment for optional default
+  echo "${optName[v]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 
 
@@ -71,4 +81,4 @@ fi
 
 
 # Run the serf
-"${SERFS}/${SURFNAME}" "${SOd}"
+"${SERFS}/${SURFNAME}" "${SOd}" "${SOv}"

@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Set the serf name
+SURFNAME="adddomaincgi"
+
+# Include the settings & functions
+source ${YEOSET}
+source ${yDir}/yeo.functions
+source ${CONF}/siteurilist
+source ${CONF}/sitenameip
+
+# About message
+aboutMsg="$(cat <<EOU
+This adds a new domain, complete with OpenDKIM profiles and keys and inkCert and Apache configs and enables CGI
+This also creates a folder for the domain in www/domains which an ftpvip can access
+This also creates an inkDNS zone file, complete with mail records
+EOU
+)"
+
+# Available flags
+optSerf="a:b:c:d:e:f:g:i:j:k:l:m:o:p:q:hyn"
+declare -A optName
+declare -A optDesc
+optName[d]="Domain"
+optDesc[d]="A new domain (or subdomain if using for email and unique SSL certificates)"
+
+
+# Check the variables
+while getopts "${optSerf}" Flag; do
+ case "${Flag}" in
+  # Help
+  h)
+    SOh="true"
+  ;;
+  d)
+    isDomain "${OPTARG}" "${optName[d]}"
+    SOd="${OPTARG}"
+  ;;
+  *)
+    yeoFail="true"
+  ;;
+ esac
+done
+
+
+# Check requirements or defaults
+## HELP
+if [ "${SOh}" = "true" ]; then
+  echo "
+${aboutMsg}"
+  echo "
+Available flags:
+-h This help message
+-d  ${optName[d]}: ${optDesc[d]}
+"
+  exit 0
+fi
+
+## FLAGS
+if [ -z "${SOd}" ]; then
+  #SOd="DEFAULT" # Uncomment for optional default
+  echo "${optName[d]} option must be set."; yeoFail="true" # Uncomment if required
+fi
+
+
+# Exit if failed
+if [ "${yeoFail}" = "true" ]; then
+  echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
+  exit 0;
+fi
+
+
+# Run the serf
+"${SERFS}/${SURFNAME}" "${SOd}"

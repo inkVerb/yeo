@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Set the serf name
+SURFNAME="activaterepo"
+
+# Include the settings & functions
+source ${YEOSET}
+source ${yDir}/yeo.functions
+source ${CONF}/siteurilist
+source ${CONF}/sitenameip
+
+# About message
+aboutMsg="$(cat <<EOU
+This activates the repo.${vipURI} folder for availability on the web
+-y	(repo.${vipURI} becomes a web-accessible folder)
+-n	(repo.${vipURI} returns to a redirect to ${inkURI})
+EOU
+)"
+
+# Available flags
+optSerf="hyn"
+declare -A optName
+declare -A optDesc
+optName[yn]="On/Off"
+optDesc[yn]="Choose one-letter flag: -y=on -n=off"
+
+# Check the variables
+while getopts "${optSerf}" Flag; do
+ case "${Flag}" in
+  # Help
+  h)
+    SOh="true"
+  ;;
+  y)
+    SOyn="on"
+  ;;
+  n)
+    SOyn="off"
+  ;;
+  *)
+    yeoFail="true"
+  ;;
+ esac
+done
+
+
+# Check requirements or defaults
+## HELP
+if [ "${SOh}" = "true" ]; then
+  echo "
+${aboutMsg}"
+  echo "
+Available flags:
+-h This help message
+-y/n  ${optName[yn]}: ${optDesc[yn]}
+"
+  exit 0
+fi
+
+## Y/N
+if [ -z "${SOyn}" ]; then
+  echo "${optName[yn]}  option must be set."; yeoFail="true" # Uncomment if required
+fi
+
+
+# Exit if failed
+if [ "${yeoFail}" = "true" ]; then
+  echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
+  exit 0;
+fi
+
+
+# Run the serf
+"${SERFS}/${SURFNAME}" "${SOyn}"

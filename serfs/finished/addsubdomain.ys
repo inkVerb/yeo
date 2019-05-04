@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# Set the serf name
+SURFNAME="addsubdomain"
+
+# Include the settings & functions
+source ${YEOSET}
+source ${yDir}/yeo.functions
+source ${CONF}/siteurilist
+source ${CONF}/sitenameip
+
+# About message
+aboutMsg="$(cat <<EOU
+This adds a subdomain to a domain already hosted
+This subdomain will not have unique email, DKIM keys, or SSL certs
+This subdomain will "administratively" belong to the domain
+The domain can have a "subdomain-like" format, such as:
+- Domain: inkisaverb.com
+- Subdomain: sub.inkisaverb.com
+OR
+- Domain: sub.inkisaverb.com (if this is a hosted domain with its own email, DKIM keys, SSL certs, etc)
+- Subdomain: moresub.sub.inkisaverb.com
+EOU
+)"
+
+# Available flags
+optSerf="d:s:h"
+declare -A optName
+declare -A optDesc
+optName[d]="Domain"
+optDesc[d]="The domain that the subdomain belongs to (this can be a higher subdomain)"
+optName[s]="Subname"
+optDesc[s]="The part of the name that makes it a subdomain (no periods)"
+
+
+# Check the variables
+while getopts "${optSerf}" Flag; do
+ case "${Flag}" in
+  # Help
+  h)
+    SOh="true"
+  ;;
+  d)
+    isWWWdomain "${OPTARG}" "Hosted domain ${OPTARG}" n
+    SOd="${OPTARG}"
+  ;;
+  s)
+    isDomainPart "${OPTARG}" "${optName[s]}"
+    SOs="${OPTARG}"
+  ;;
+  *)
+    yeoFail="true"
+  ;;
+ esac
+done
+
+# Special double-check the final result
+isDomain "${SOs}.${SOd}" "Full length of the domain-to-be"
+
+
+# Check requirements or defaults
+## HELP
+if [ "${SOh}" = "true" ]; then
+  echo "
+${aboutMsg}"
+  echo "
+Available flags:
+-h This help message
+-d  ${optName[d]}: ${optDesc[d]}
+-s  ${optName[s]}: ${optDesc[s]}
+"
+  exit 0
+fi
+
+## FLAGS
+if [ -z "${SOd}" ]; then
+  #SOd="DEFAULT" # Uncomment for optional default
+  echo "${optName[d]} option must be set."; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOd}" ]; then
+  #SOd="DEFAULT" # Uncomment for optional default
+  echo "${optName[d]} option must be set."; yeoFail="true" # Uncomment if required
+fi
+
+
+# Exit if failed
+if [ "${yeoFail}" = "true" ]; then
+  echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
+  exit 0;
+fi
+
+
+# Run the serf
+"${SERFS}/${SURFNAME}" "${SOd}" "${SOs}"

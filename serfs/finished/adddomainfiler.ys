@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# Set the serf name
+SURFNAME="adddomainfiler"
+
+# Include the settings & functions
+source ${YEOSET}
+source ${yDir}/yeo.functions
+source ${CONF}/siteurilist
+source ${CONF}/sitenameip
+
+# About message
+aboutMsg="$(cat <<EOU
+This adds an existing domain to an existing ftpfiler's home "~/domains" folder
+EOU
+)"
+
+# Available flags
+optSerf="d:f:h"
+declare -A optName
+declare -A optDesc
+optName[d]="Domain"
+optDesc[d]="The domain to be activated"
+optName[f]="FTP Filer"
+optDesc[f]="The FTP user to gain folder access to the activated domain"
+
+
+# Check the variables
+while getopts "${optSerf}" Flag; do
+ case "${Flag}" in
+  # Help
+  h)
+    SOh="true"
+  ;;
+  d)
+    isDomain "${OPTARG}" "${optName[d]}"
+    isWWWdomain "${OPTARG}" "Hosted domain ${OPTARG}"
+    SOd="${OPTARG}"
+  ;;
+  f)
+    isFTPfiler "${OPTARG}" "${optName[f]}"
+    SOf="${OPTARG}"
+  ;;
+  *)
+    yeoFail="true"
+  ;;
+ esac
+done
+
+
+# Check requirements or defaults
+## HELP
+if [ "${SOh}" = "true" ]; then
+  echo "
+${aboutMsg}"
+  echo "
+Available flags:
+-h This help message
+-d  ${optName[d]}: ${optDesc[d]}
+-f  ${optName[f]}: ${optDesc[f]}
+"
+  exit 0
+fi
+
+## FLAGS
+if [ -z "${SOd}" ]; then
+  #SOd="DEFAULT" # Uncomment for optional default
+  echo "${optName[d]} option must be set."; yeoFail="true" # Uncomment if required
+fi
+if [ -z "${SOf}" ]; then
+  #SOf="DEFAULT" # Uncomment for optional default
+  echo "${optName[f]} option must be set."; yeoFail="true" # Uncomment if required
+fi
+
+
+# Exit if failed
+if [ "${yeoFail}" = "true" ]; then
+  echo "Learn more with: yeo ${SURNAME} ${SUBNAME} -h"
+  exit 0;
+fi
+
+
+# Run the serf
+"${SERFS}/${SURFNAME}" "${SOd}" "${SOf}"

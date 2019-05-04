@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the serf name
-SURFNAME="activatecgi"
+SURFNAME="adddomainvip"
 
 # Include the settings & functions
 source ${YEOSET}
@@ -11,18 +11,17 @@ source ${CONF}/sitenameip
 
 # About message
 aboutMsg="$(cat <<EOU
-This activates the cgi.${vipURI} folder so the web will provide an index file
--y	(cgi.${vipURI} becomes a web-accessible folder)
--n	(cgi.${vipURI} returns to a redirect to ${inkURI})
+This adds a hosted domain to the FTP-accessible "vip/_domains/" directory
 EOU
 )"
 
 # Available flags
-optSerf="hyn"
+optSerf="d:h"
 declare -A optName
 declare -A optDesc
-optName[yn]="On/Off"
-optDesc[yn]="Choose one-letter flag: -y=on -n=off"
+optName[d]="Domain"
+optDesc[d]="The hosted domain (or subdomain if using for email and unique SSL certificates)"
+
 
 # Check the variables
 while getopts "${optSerf}" Flag; do
@@ -31,11 +30,10 @@ while getopts "${optSerf}" Flag; do
   h)
     SOh="true"
   ;;
-  y)
-    SOyn="on"
-  ;;
-  n)
-    SOyn="off"
+  d)
+    isDomain "${OPTARG}" "${optName[d]}"
+    isWWWdomain "${OPTARG}" "Hosted domain ${OPTARG}"
+    SOd="${OPTARG}"
   ;;
   *)
     yeoFail="true"
@@ -52,14 +50,15 @@ ${aboutMsg}"
   echo "
 Available flags:
 -h This help message
--y/n  ${optName[yn]}  ${optDesc[yn]}
+-d  ${optName[d]}: ${optDesc[d]}
 "
   exit 0
 fi
 
-## Y/N
-if [ -z "${SOyn}" ]; then
-  echo "${optName[yn]}  option must be set."; yeoFail="true" # Uncomment if required
+## FLAGS
+if [ -z "${SOd}" ]; then
+  #SOd="DEFAULT" # Uncomment for optional default
+  echo "${optName[d]} option must be set."; yeoFail="true" # Uncomment if required
 fi
 
 
@@ -71,4 +70,4 @@ fi
 
 
 # Run the serf
-"${SERFS}/${SURFNAME}" "${SOyn}"
+"${SERFS}/${SURFNAME}" "${SOd}"

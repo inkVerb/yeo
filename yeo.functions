@@ -320,16 +320,34 @@ echo "${vvar} must be a \"normal\" URL: domain, including alphanumeric character
 exit 0; fi
 }
 
-## Domain (az09.az)
+## Domain (azAZ09_-.az)
 isDomain() {
 local DOMAIN="$1"
 local vvar="$2"
-local DOMAINregex="([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
-if [[ "${DOMAIN}" =~ ${DOMAINregex} ]] ; then
+#local DOMAINregex="([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$" # Below is a more expanded regex
+#local DOMAINregex="^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][-_\.a-zA-Z0-9]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,13}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$" # Below is a mod to allow hyphens
+local DOMAINregex="^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z-]{1})|([a-zA-Z0-9-][-_\.a-zA-Z0-9]{1,61}[a-zA-Z0-9]))\.([a-zA-Z-]{2,13}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z-]{2,3})$"
+
+if [[ "${DOMAIN}" =~ ${DOMAINregex} ]] && [[ "${DOMAIN}" != *- ]]; then
 isDomain="true"; else
 isDomain="false"; fi
 
 if [ "$3" != "n" ] && [ "${isDomain}" = "false" ]; then
+echo "${vvar} must be a \"normal\" domain, including alphanumeric characters, underscore, and hyphen, subdomains allowed if included, ie:  inksaverb.com  sub.inkisaverb.com  etc.sub.inkisaverb.com"
+exit 0; fi
+}
+
+## Domain part (azAZ09-)
+isDomainPart() {
+local DOMAINPT="$1"
+local vvar="$2"
+local DOMAINPTregex="[-A-Za-z0-9_]"
+
+if [[ "${DOMAINPT}" =~ ${DOMAINPTregex} ]] && [[ "${DOMAINPT}" != *- ]] && [[ "${DOMAINPT}" != \-* ]] ; then
+isDomainPart="true"; else
+isDomainPart="false"; fi
+
+if [ "$3" != "n" ] && [ "${isDomainPart}" = "false" ]; then
 echo "${vvar} must be a \"normal\" domain, including alphanumeric characters, underscore, and hyphen, subdomains allowed if included, ie:  inksaverb.com  sub.inkisaverb.com  etc.sub.inkisaverb.com"
 exit 0; fi
 }
@@ -363,6 +381,20 @@ echo "${vvar} must a valid verb TLD: ${VERBTLDS[@]}"
 exit 0; fi
 }
 
+## Vapp (a valid, installed vapp in /var/www/vapps)
+isSiteInstalled() {
+local INSTALLEDVAPP="$1"
+local vvar="$2"
+. /opt/verb/conf/siteinstallstatus
+if [ "${INSTALLEDVAPP}" = "NOT_YET" ]; then
+    isSiteInstalled="false"; else
+    isSiteInstalled="true"; fi
+
+if [ "$3" != "n" ] && [ "${isSiteInstalled}" = "false" ]; then
+echo "${vvar} must be installed, currently it isn't."
+exit 0; fi
+}
+
 ## WWW Domain (a valid, installed vapp in /var/www/domains)
 isWWWdomain() {
 local wwwDomain="$1"
@@ -388,6 +420,20 @@ if [ -d "${listLoc}/${VAPP}" ]; then
 
 if [ "$3" != "n" ] && [ "${isVapp}" = "false" ]; then
 echo "${vvar} must be installed, currently it isn't."
+exit 0; fi
+}
+
+## FTPfiler (a valid, installed ftpfiler with a home in /srv/vip/filers)
+isFTPfiler() {
+local FTPFILER="$1"
+local vvar="$2"
+local listLoc="${FTPFILERS}"
+if [ -d "${listLoc}/${FTPFILER}" ]; then
+    isFTPfiler="true"; else
+    isFTPfiler="false"; fi
+
+if [ "$3" != "n" ] && [ "${isFTPfiler}" = "false" ]; then
+echo "${vvar} must exist, currently it doesn't."
 exit 0; fi
 }
 
