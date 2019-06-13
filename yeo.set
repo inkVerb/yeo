@@ -28,6 +28,7 @@ export BOSS="${vDir}/boss"
 export DOCS="${vDir}/docs"
 export VAPPSDIR="/var/www/vapps"
 export WWWDOMAINS="/var/www/domains"
+export WWWFORWARDS="/var/www/forwards"
 export FTPFILERS="/srv/vip/filers"
 
 # Settings

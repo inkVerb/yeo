@@ -395,7 +395,7 @@ echo "${vvar} must be installed, currently it isn't."
 exit 0; fi
 }
 
-## WWW Domain (a valid, installed vapp in /var/www/domains)
+## WWW Domain (a valid, installed domain in /var/www/domains)
 isWWWdomain() {
 local wwwDomain="$1"
 local vvar="$2"
@@ -405,7 +405,21 @@ if [ -d "${listLoc}/${wwwDomain}" ]; then
     isWWWdomain="false"; fi
 
 if [ "$3" != "n" ] && [ "${isWWWdomain}" = "false" ]; then
-echo "${vvar} must be installed, currently it isn't."
+echo "${vvar} must be hosted, currently it isn't."
+exit 0; fi
+}
+
+## WWW Forward (a valid, forwarded domain in /var/www/forwards)
+isWWWforward() {
+local wwwForward="$1"
+local vvar="$2"
+local listLoc="${WWWFORWARDS}"
+if [ -d "${listLoc}/${wwwForward}" ]; then
+    isWWWforward="true"; else
+    isWWWforward="false"; fi
+
+if [ "$3" != "n" ] && [ "${isWWWforward}" = "false" ]; then
+echo "${vvar} must be forwarded, currently it isn't."
 exit 0; fi
 }
 
