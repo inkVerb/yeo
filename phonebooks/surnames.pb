@@ -11,6 +11,7 @@ kill
 mysql
 new
 point
+secure
 set
 update
 verb
