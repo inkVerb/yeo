@@ -26,7 +26,8 @@ Arch Linux does not come with `sudo` ready by default
 
 - Enable `sudo` with this:
 
-| **Turn on `sudo`**: #
+| **Turn on `sudo`**: # (must run as `root`)
+
 ```
 groupadd sudo
 sed -i "s?# %sudo\tALL=(ALL) ALL?%sudo\tALL=(ALL) ALL?" /etc/sudoers
@@ -38,23 +39,25 @@ Here is the install script for `yeo`, *Use at your own risk!*
 
 **Disclaimer: This could result in destroying your entire computer or bring the apocalypse or something between or far worse! Only use this if you know how to use `pacman` and `yay` and install Arch Linux yourself and don't like SysAdmin wages for a CLI babysitting job!**
 
-First check for any command conflict:
+First check for any command conflict
+
+| **Check for `yeo` tool conflict**: $
 
 ```console
 if ! id -u worker && ! which yeo; then echo "Cannot install yeo, there is a conflict!"; else echo "Ready to install yeo!"; fi
 ```
 
-| **`yeo` install**: #
+| **`yeo` install**: $
 
 ```console
-groupadd worker
-useradd -g worker worker
-usermod -a -G wheel worker
-mkdir -p /opt/vrk/worker
-chown -R worker:worker /opt/vrk/worker
-usermod -d /opt/vrk/worker worker
-echo 'worker ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/worker
-cat <<'EOF' >> /opt/yeo.sh
+sudo groupadd worker
+sudo useradd -g worker worker
+sudo usermod -a -G wheel worker
+sudo mkdir -p /opt/vrk/worker
+sudo chown -R worker:worker /opt/vrk/worker
+sudo usermod -d /opt/vrk/worker worker
+sudo echo 'worker ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/worker
+sudo cat <<'EOF' >> /opt/yeo.sh
 #!/bin/bash
 if [ "$(id -u)" != "0" ]; then
   /usr/bin/echo "Must run as root or sudo!"
@@ -77,8 +80,8 @@ else
   exit 1
 fi
 EOF
-chmod 755 /opt/yeo.sh
-/usr/bin/ln -sfn /opt/yeo.sh /usr/local/bin/yeo
+sudo chmod 755 /opt/yeo.sh
+sudo ln -sfn /opt/yeo.sh /usr/local/bin/yeo
 ```
 
 Now, run `sudo yeo` where you would normally run `yay`, including with the `--noconfirm` option if you like
