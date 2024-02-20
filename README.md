@@ -41,13 +41,11 @@ sed -i "s?# %sudo\tALL=(ALL) ALL?%sudo\tALL=(ALL) ALL?" /etc/sudoers
 
 *First check for any command conflict*
 
-| **Check for `yeo` tool conflict**: $
+| **Check for `yeo` tool dependencies & conflicts**: $
 
 ```console
-if ! id -u worker && ! which yeo; then echo "Cannot install yeo, there is a conflict!"; else echo "Ready to install yeo!"; fi
+if which yay && id -u worker; then if which yeo; then echo "yeo may already be installed!"; else echo "Ready to install yeo!"; fi else echo "Cannot install yeo, there is a conflict!"; fi
 ```
-
-*If you see the message `Cannot install yeo, there is a conflict!` then sorry, you can't install `yeo`*
 
 *If you see the message `Ready to install yeo!` then you are ready to proceed...*
 
