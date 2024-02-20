@@ -47,6 +47,10 @@ First check for any command conflict
 if ! id -u worker && ! which yeo; then echo "Cannot install yeo, there is a conflict!"; else echo "Ready to install yeo!"; fi
 ```
 
+If you see the message `Cannot install yeo, there is a conflict!` then sorry, you can't install `yeo`
+
+If you see the message `Ready to install yeo!` then you are ready to proceed
+
 | **`yeo` install**: $
 
 ```console
