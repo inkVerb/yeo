@@ -34,9 +34,11 @@ sed -i "s?# %sudo\tALL=(ALL) ALL?%sudo\tALL=(ALL) ALL?" /etc/sudoers
 
 ## Install `yeo`
 
-Here is the install script for `yeo`
+Here is the install script for `yeo`, *Use at your own risk!*
 
-| **`yeo` install**: # *Use at your own risk!*
+**Disclaimer: This could result in destroying your entire computer or bring the apocalypse or something between or far worse! Only use this if you know how to use `pacman` and `yay` and install Arch Linux yourself and don't like SysAdmin wages for a CLI babysitting job!**
+
+| **`yeo` install**: #
 
 ```console
 groupadd worker
@@ -53,7 +55,6 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-# Check for quotes
 /usr/bin/echo $@ | /usr/bin/grep -q '"'
 if [ "$?" != "0" ]; then
   /usr/bin/echo $@ | /usr/bin/grep -q "'"
