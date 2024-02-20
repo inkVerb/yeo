@@ -24,7 +24,7 @@ Run a `sudo` command that takes the `sudo` password for the duration of the CLI 
 ## Prerequesite: `sudo`
 Arch Linux does not come with `sudo` ready by default
 
-- Enable `sudo` with this:
+*If you have not already enabled `sudo`, you can enable `sudo` with this:*
 
 | **Turn on `sudo`**: # (must run as `root`)
 
@@ -39,7 +39,7 @@ Here is the install script for `yeo`, *Use at your own risk!*
 
 **Disclaimer: This could result in destroying your entire computer or bring the apocalypse or something between or far worse! Only use this if you know how to use `pacman` and `yay` and install Arch Linux yourself and don't like SysAdmin wages for a CLI babysitting job!**
 
-First check for any command conflict
+*First check for any command conflict*
 
 | **Check for `yeo` tool conflict**: $
 
@@ -47,9 +47,9 @@ First check for any command conflict
 if ! id -u worker && ! which yeo; then echo "Cannot install yeo, there is a conflict!"; else echo "Ready to install yeo!"; fi
 ```
 
-If you see the message `Cannot install yeo, there is a conflict!` then sorry, you can't install `yeo`
+*If you see the message `Cannot install yeo, there is a conflict!` then sorry, you can't install `yeo`*
 
-If you see the message `Ready to install yeo!` then you are ready to proceed
+*If you see the message `Ready to install yeo!` then you are ready to proceed...*
 
 | **`yeo` install**: $
 
