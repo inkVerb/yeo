@@ -21,7 +21,10 @@ Run a `sudo` command that takes the `sudo` password for the duration of the CLI 
 - This normal (`worker`) user requires a `sudo` password or `root` permissions to be initiated, but then does not need a password later
 - The result is that the `sudo` password request moves up to the beginning of the workflow, so it is a "fire and walk" `sudo` command just as `pacman`
 
-## Prerequesite: `sudo`
+## Prerequesites:
+
+1. `sudo`
+
 Arch Linux does not come with `sudo` ready by default
 
 *If you have not already enabled `sudo`, you can enable `sudo` with this:*
@@ -31,6 +34,22 @@ Arch Linux does not come with `sudo` ready by default
 ```
 groupadd sudo
 sed -i "s?# %sudo\tALL=(ALL) ALL?%sudo\tALL=(ALL) ALL?" /etc/sudoers
+```
+
+2. `yay`
+
+`yay` must be installed already
+
+| **Install `yay` AUR helper** : $
+
+```console
+sudo pacman -Syy --needed base-devel git
+cd ~
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si --noconfirm
+cd ..
+rm -rf yay
 ```
 
 ## Install `yeo`
