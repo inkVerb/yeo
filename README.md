@@ -31,7 +31,7 @@ Arch Linux does not come with `sudo` ready by default
 
 | **Turn on `sudo`**: # (must run as `root`)
 
-```
+```console
 groupadd sudo
 sed -i "s?# %sudo\tALL=(ALL) ALL?%sudo\tALL=(ALL) ALL?" /etc/sudoers
 ```
