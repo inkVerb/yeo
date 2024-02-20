@@ -38,6 +38,12 @@ Here is the install script for `yeo`, *Use at your own risk!*
 
 **Disclaimer: This could result in destroying your entire computer or bring the apocalypse or something between or far worse! Only use this if you know how to use `pacman` and `yay` and install Arch Linux yourself and don't like SysAdmin wages for a CLI babysitting job!**
 
+First check for any command conflict:
+
+```console
+if ! id -u worker && ! which yeo; then echo "Cannot install yeo, there is a conflict!"; else echo "Ready to install yeo!"; fi
+```
+
 | **`yeo` install**: #
 
 ```console
