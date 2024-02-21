@@ -109,4 +109,4 @@ sudo chmod 755 /opt/yeo.sh
 sudo ln -sfn /opt/yeo.sh /usr/local/bin/yeo
 ```
 
-Now, run `sudo yeo` where you would normally run `yay`, including with the `--noconfirm` option if you like
+Now, you have the option to run `sudo yeo` where you would normally run `yay`, including with `--noconfirm` or such `yay` options if you like
