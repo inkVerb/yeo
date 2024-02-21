@@ -82,7 +82,7 @@ sudo mkdir -p /opt/vrk/worker
 sudo chown -R worker:worker /opt/vrk/worker
 sudo usermod -d /opt/vrk/worker worker
 sudo echo 'worker ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/worker
-sudo cat <<'EOF' >> /opt/yeo.sh
+sudo cat <<'EOF' > /opt/yeo.sh
 #!/bin/bash
 if [ "$(id -u)" != "0" ]; then
   /usr/bin/echo "Must run as root or sudo!"
