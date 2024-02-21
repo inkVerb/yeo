@@ -3,6 +3,10 @@
 
 With this script, you can run `sudo yeo -Syy some-package --noconfirm` instead of needing to babysit for a password in the middle of the usual `yay -Syy some-package --noconfirm`
 
+*Use at your own risk!*
+
+**Disclaimer: Anything on this page could result in destroying your entire computer or bring the apocalypse or something less or between or far worse! Only use this if you know how to use [pacman](https://wiki.archlinux.org/title/pacman) and [yay]([https://aur.archlinux.org/packages/yay](https://github.com/Jguer/yay/blob/next/README.md)) and install [Arch Linux](https://archlinux.org/) yourself and don't like SysAdmin wages for a CLI babysitting job!**
+
 ## Reasoning
 `yay` will prompt the SysAdmin or user for `sudo` passwords in the middle of its execution, meaning the SysAdmin must babysit the terminal during `yay` installs
 
@@ -53,10 +57,6 @@ rm -rf yay
 ```
 
 ## Install `yeo`
-
-*Use at your own risk!*
-
-**Disclaimer: This could result in destroying your entire computer or bring the apocalypse or something between or far worse! Only use this if you know how to use `pacman` and `yay` and install Arch Linux yourself and don't like SysAdmin wages for a CLI babysitting job!**
 
 *First check for any command conflict*
 
