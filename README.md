@@ -1,17 +1,15 @@
 # yeo - AUR helper helper for Arch Linux
 `yay` helper to intput `sudo` password at command entry
 
-With this script, you can run `sudo yeo -Syy some-package --noconfirm` instead of needing to babysit for a password in the middle of the usual `yay -Syy some-package --noconfirm`
+With this script, you can run `sudo yeo -Syy some-package --noconfirm` and `sudo yeo -Syyu --noconfirm` (et al) instead of needing to babysit for a `sudo` password in the middle of the usual `yay -Syy some-package --noconfirm`
 
 *Use at your own risk!*
 
-**Disclaimer: Anything on this page could result in destroying your entire computer or bring the apocalypse or something less or between or far worse! Only use this if you know how to use [pacman](https://wiki.archlinux.org/title/pacman) and [yay](https://github.com/Jguer/yay/blob/next/README.md) and install [Arch Linux](https://archlinux.org/) yourself and don't like SysAdmin wages for a CLI babysitting job!**
+**Disclaimer: Anything on this page could result in destroying your entire computer or bring the apocalypse or something less or between or far worse! Only use this tool if you know how to use [pacman](https://wiki.archlinux.org/title/pacman) and [yay](https://github.com/Jguer/yay/blob/next/README.md) and can install [Arch Linux](https://archlinux.org/) yourself and don't like SysAdmin wages for a CLI babysitting job!**
 
 ## Reasoning
-`yay` will prompt the SysAdmin or user for `sudo` passwords in the middle of its execution, meaning the SysAdmin must babysit the terminal during `yay` installs
-
+- `yay` will prompt the SysAdmin or user for `sudo` passwords in the middle of its execution, meaning the SysAdmin must babysit the terminal during `yay` installs and updates
 - This defeats the purpose of using the terminal and scripts, meaning SysAdmin-level hourly cost to watch `yay` work
-- `yeo` must be run as `sudo`, then runs `yay` as a user that does not need a password for `sudo` operations
 
 However, the premise is correct...
 
@@ -19,11 +17,17 @@ However, the premise is correct...
 - A `root` user compiler can cause many problems, including code not be executable by normal users
 - But, `yay` both compiles and installs, and installing does require `sudo`
 
-## Solution
-Run a `sudo` command that takes the `sudo` password for the duration of the CLI execution, but runs `yay` a normal user which has a no-password `sudo` permission
+How `yeo` helps...
 
+- `yeo` must be run as `sudo`, then runs `yay` as a user that does not need a password for `sudo` operations as they arise
+
+## Solution
+- Run a `sudo` command that takes the `sudo` password for the duration of the CLI execution, but runs `yay` through a normal user which has a no-password `sudo` permission
 - This normal (`worker`) user requires a `sudo` password or `root` permissions to be initiated, but then does not need a password later
-- The result is that the `sudo` password request moves up to the beginning of the workflow, so it is a "fire and walk" `sudo` command just as `pacman`
+- The result is that:
+  1. The `sudo` password CLI request moves up to the beginning of the workflow
+  2. Where the `sudo` password only needs to be entered once
+  3. We have a "press and walk" `sudo` command more like `pacman`
 
 ## Prerequesites:
 
@@ -31,7 +35,7 @@ Run a `sudo` command that takes the `sudo` password for the duration of the CLI 
 
 Arch Linux does not come with `sudo` ready by default
 
-*If you have not already enabled `sudo`, you can enable `sudo` with this:*
+*If you have not already enabled `sudo`, you can enable `sudo` with this, otherwise skip to 2...*
 
 | **Turn on `sudo`**: # (must run as `root`)
 
@@ -42,7 +46,7 @@ sed -i "s?# %sudo\tALL=(ALL) ALL?%sudo\tALL=(ALL) ALL?" /etc/sudoers
 
 2. `yay`
 
-`yay` must be installed already
+*`yay` must be installed already, if it is then skip 2...*
 
 | **Install `yay` AUR helper** : $
 
@@ -58,7 +62,7 @@ rm -rf yay
 
 ## Install `yeo`
 
-*First check for any command conflict*
+*First check for dependencies and any conflict*
 
 | **Check for `yeo` tool dependencies & conflicts**: $
 
