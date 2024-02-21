@@ -27,7 +27,7 @@ How `yeo` helps...
 - The result is that:
   1. The `sudo` password CLI request moves up to the beginning of the workflow
   2. Where the `sudo` password only needs to be entered once
-  3. We have a "press and walk" `sudo` command more like `pacman`
+  3. Thus, we have a "press and walk" `sudo` command more like `pacman`
 
 ## Prerequesites:
 
