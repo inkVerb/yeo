@@ -82,7 +82,7 @@ sudo mkdir -p /opt/vrk/worker
 sudo chown -R worker:worker /opt/vrk/worker
 sudo usermod -d /opt/vrk/worker worker
 sudo usermod -L worker
-sudo chsh -s /usr/sbin/nologin worker
+sudo chsh -s /usr/sbin/bash worker
 sudo echo 'worker ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/worker
 sudo cat <<'EOF' > /opt/yeo.sh
 #!/bin/bash
